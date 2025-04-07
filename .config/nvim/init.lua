@@ -1,0 +1,6 @@
+require("opt").run()
+require("package_manager").run()
+require("snippets").run()
+require("keymap").run()
+require("langmap").run()
+require("neovide").run()

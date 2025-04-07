@@ -1,0 +1,5 @@
+STUFF TO DO
+- submitting snippets with Tab
+- scrolling suggestions
+- sorting suggestions?
+- set current directory name as a title

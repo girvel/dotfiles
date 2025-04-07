@@ -1,0 +1,59 @@
+local language_styles = require("language_styles")
+
+
+return {
+  run = function()
+    vim.opt.relativenumber = true
+    vim.opt.number = true
+
+    vim.opt.tabstop = 4
+    vim.opt.shiftwidth = 4
+    vim.opt.softtabstop = 4
+
+    vim.opt.expandtab = true
+
+    vim.opt.autoindent = true
+    vim.opt.smartindent = false
+    vim.opt.cindent = false
+
+    vim.opt.termguicolors = true
+
+    vim.g.mapleader = " "
+
+    vim.cmd("filetype indent off")
+    vim.cmd(":set cc=100")
+
+    for lang, data in pairs(language_styles) do
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = lang,
+        callback = function()
+          vim.opt_local.tabstop = data.tab
+          vim.opt_local.shiftwidth = data.tab
+          vim.opt_local.softtabstop = data.tab
+        end
+      })
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "html",
+      callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.softtabstop = 2
+      end
+    })
+
+    vim.opt.title = true
+    -- vim.api.nvim_create_autocmd("DirChanged", {
+    --   pattern = "*",
+    --   callback = function()
+    --     local titlestring = vim.fn.getcwd()
+    --     local i, j = titlestring:find("/mnt/d/workshop/")
+    --     if i then
+    --       titlestring = titlestring:sub(1, i - 1) .. titlestring:sub(j + 1)
+    --     end
+    --     vim.opt.titlestring = titlestring
+    --   end,
+    -- })
+  end,
+}
