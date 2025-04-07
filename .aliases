@@ -14,8 +14,8 @@ cdw () {
     cd $WORKSHOP/$1
 }
 
-alias A='sudo aptitude'
-alias a='aptitude'
+alias A='sudo apt'
+alias a='apt'
 alias e='$EDITOR'
 alias E='sudo $EDITOR'
 alias l='eza -lAh --group-directories-first'

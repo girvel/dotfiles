@@ -1,0 +1,14 @@
+[user]
+	name = girvel
+	email = widauka@ya.ru
+[push]
+	autoSetupRemote = true
+[core]
+	editor = nvim
+	autocrlf = input
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	renames = true
+[commit]
+	verbose = true
