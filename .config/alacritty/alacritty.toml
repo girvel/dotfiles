@@ -1,0 +1,20 @@
+[general]
+working_directory = "D:\\workshop\\"
+
+[font]
+size = 12
+
+[font.normal]
+family = "CodeNewRoman Nerd Font Mono"
+
+[[keyboard.bindings]]
+action = "ReceiveChar"
+key = "Return"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+
+[terminal]
+shell = "zsh"
