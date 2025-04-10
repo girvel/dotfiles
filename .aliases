@@ -4,9 +4,12 @@
 if [ -n "$WSL_DISTRO_NAME" ]; then
     alias g="git.exe"
     alias c='cargo.exe'
+    alias love='love.exe .'
+    alias z="zig.exe"
 else
     alias g="git"
     alias c="cargo"
+    alias z="zig"
 fi
 
 # BASE #
@@ -22,8 +25,6 @@ alias l='eza -lAh --group-directories-first'
 function lm() {
     eza -lAr -s=modified --color=always "$@" | head -n 20
 }
-alias love='love.exe .'
-alias z="zig.exe"
 
 # EDITOR #
 git config --global core.editor "$EDITOR"
