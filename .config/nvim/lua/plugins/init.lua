@@ -169,6 +169,18 @@ return {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.6",
     dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("telescope").setup {
+        defaults = {
+          file_ignore_patterns = {".git"},
+          hidden = true,
+        },
+        pickers = {
+          find_files = {hidden = true},
+          live_grep = {additional_args = {"--hidden"}},
+        }
+      }
+    end,
   },
   {
     "L3MON4D3/LuaSnip",
