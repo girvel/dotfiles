@@ -53,6 +53,8 @@ return {
       lspconfig.cssls.setup {
         capabilities = capabilities,
       }
+
+      lspconfig.jedi_language_server.setup {}
     end,
   },
   {
