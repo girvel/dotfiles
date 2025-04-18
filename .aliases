@@ -6,6 +6,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     alias c='cargo.exe'
     alias love='love.exe .'
     alias z="zig.exe"
+    alias ad='arduino-cli.exe'
 else
     alias g="git"
     alias c="cargo"
