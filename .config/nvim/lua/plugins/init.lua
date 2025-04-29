@@ -31,6 +31,7 @@ return {
                 vim.env.VIMRUNTIME,
                 -- "~/Applications/lsp/lua-language-server/meta/3rd/love2d",
                 "${3rd}/love2d/library",
+                "${3rd}/luasocket/library",
               },
             },
             misc = {
