@@ -56,6 +56,8 @@ return {
       }
 
       lspconfig.jedi_language_server.setup {}
+
+      lspconfig.gopls.setup {}
     end,
   },
   {

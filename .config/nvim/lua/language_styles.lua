@@ -44,4 +44,7 @@ return {
   sh = {
     tab = 4,
   },
+  go = {
+    tab = 4,
+  },
 }
