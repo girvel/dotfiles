@@ -1,0 +1,23 @@
+if exists("b:current_syntax")
+    finish
+endif
+
+syn match msDescription "^.*"
+hi def link msDescription Comment
+
+syn match msHeadingBorder "^---$"
+hi def link msHeadingBorder Keyword
+
+syn match msConditional "^\s*!.*$"
+hi def link msConditional Keyword
+
+syn match msSpeaker "^\s*\S\+:"
+hi def link msSpeaker Keyword
+
+syn match msOption "^\s*\d\+\. "
+hi def link msOption Number
+
+syn match msValue "^\s*\".*\"$"
+hi def link msValue String
+
+let b:current_syntax = "moonspeak"
