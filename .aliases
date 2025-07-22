@@ -26,9 +26,9 @@ alias l='eza -lAh --group-directories-first'
 function lm() {
     eza -lAr -s=modified --color=always "$@" | head -n 20
 }
+alias cb='xclip -selection clipboard'
 
 # EDITOR #
-git config --global core.editor "$EDITOR"
 alias erc='e ~/.zshrc; source ~/.zshrc'
 alias rc='source ~/.zshrc'
 function ebin() {
@@ -67,6 +67,3 @@ function lps() {
     cd $old_path
 }
 alias lpe='e $(looper path schedule)'
-
-# C #
-alias cbuild="cd build && cmake .. && make && cd .."

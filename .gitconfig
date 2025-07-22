@@ -4,7 +4,7 @@
 [push]
 	autoSetupRemote = true
 [core]
-	editor = nvim
+	editor = vi
 	autocrlf = input
 [diff]
 	algorithm = histogram
