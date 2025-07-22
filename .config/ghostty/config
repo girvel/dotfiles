@@ -1,2 +1,4 @@
 keybind = alt+left=previous_tab
 keybind = alt+right=next_tab
+window-decoration = none
+maximize = true

@@ -32,6 +32,7 @@ return {
 
     -- lsp --
     vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, {})
+    vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, {})
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 
