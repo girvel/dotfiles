@@ -6,10 +6,21 @@ return {
     end
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup()
-    end,
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "clangd",
+        "gopls",
+        "lua_ls",
+        "zls",
+        "cssls",
+        "ts_ls",
+      },
+    },
+    dependencies = {
+        { "mason-org/mason.nvim", opts = {} },
+        "neovim/nvim-lspconfig",
+    },
   },
   {
     "neovim/nvim-lspconfig",
