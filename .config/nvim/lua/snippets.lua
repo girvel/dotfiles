@@ -129,6 +129,10 @@ return {
       ),
     })
 
+    luasnip.add_snippets("zig", {
+      snippet("pp", [[std.debug.print("$1\n", .{$2});$0]]),
+    })
+
     for language, data in pairs(language_styles) do
       local tab = string.rep(" ", data.tab)
       luasnip.add_snippets(language, {
