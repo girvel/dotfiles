@@ -23,18 +23,19 @@ return {
     vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
     vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
     vim.keymap.set("n", "<leader>fr", builtin.resume, {})
+    vim.keymap.set("n", "<leader>fn", ":Telescope notify<CR>", {})
+    vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})
+    vim.keymap.set("n", "gd", builtin.lsp_definitions, {})
+
     vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
     vim.keymap.set("n", "<leader>ft", builtin.treesitter, {})
     vim.keymap.set("n", "<leader>fd", builtin.oldfiles, {})
-    vim.keymap.set("n", "<leader>fn", ":Telescope notify<CR>", {})
-    vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})
 
     -- lsp --
     vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, {})
     vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, {})
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 
     -- luasnip --
     vim.keymap.set("i", "<M-CR>", function() luasnip.jump(1) end, {silent = true})
