@@ -27,6 +27,8 @@ return {
     vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})
     vim.keymap.set("n", "gd", builtin.lsp_definitions, {})
 
+    vim.keymap.set("v", "<leader>fg", '"zy:Telescope live_grep default_text=<C-r>z<cr>', {})
+
     vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
     vim.keymap.set("n", "<leader>ft", builtin.treesitter, {})
