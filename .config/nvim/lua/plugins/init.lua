@@ -10,8 +10,6 @@ return {
     opts = {
       ensure_installed = {
         "clangd",
-        "gopls",
-        "lua_ls",
         "zls",
         "cssls",
         "ts_ls",
@@ -44,9 +42,8 @@ return {
                 "${3rd}/love2d/library",
                 "${3rd}/luasocket/library",
               },
-            },
-            misc = {
-              parameters = {"--loglevel=trace", "--logpath=/home/girvel/.lua-language-server/log"},
+              maxPreload = 100000,
+              preloadFileSize = 10000,
             },
           }
         }

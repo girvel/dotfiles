@@ -13,7 +13,12 @@ return {
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("ggO", true, false, true), "n", false)
     end, {remap = true})
 
-    -- vim.keymap.set("n", "<CR>", "za")
+    vim.keymap.set("n", "<leader>oo", function()
+      local files = vim.fn.globpath(".", "**/*.lua", true, true)
+      for i, path in ipairs(files) do
+        vim.cmd("e " .. path)
+      end
+    end, {})
 
     -- nvim-tree --
     vim.keymap.set("n", "<leader>tf", ":NvimTreeFocus<CR>")
