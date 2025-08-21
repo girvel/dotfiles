@@ -24,7 +24,7 @@ return {
     t({" = {}", "", "--- @class "}),
     i(1),
     t({"", "local methods = {}", "local mt = {__index = methods}", "", "--- @return "}),
-    i(1),
+    f(function(args) return args[1][1] end, 1),
     t({"", ""}),
     f(function(args) return get_head(lua_path(vim.api.nvim_buf_get_name(0))) end),
     t({".new = function()", "  return setmetatable({", "    "}),
