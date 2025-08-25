@@ -20,4 +20,7 @@ hi def link msOption Number
 syn match msValue "^\s*\".*\"$"
 hi def link msValue String
 
+syn match msReview "\\[^\\]*\\"
+hi def link msReview Todo
+
 let b:current_syntax = "moonspeak"
