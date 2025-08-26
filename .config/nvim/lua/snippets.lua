@@ -19,15 +19,11 @@ return {
         "sc",
         [[
           {
-            name = "$1",
-            enabled = true,
-            start_predicate = function(self, rails, dt)
-              return $2
+            start_predicate = function(self, dt)
+              return $1
             end,
 
-            run = function(self, rails)
-              self.enabled = false
-
+            run = function(self)
               $0
             end,
           },
