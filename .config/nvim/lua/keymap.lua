@@ -26,7 +26,11 @@ return {
 
     -- telescope --
     vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+    vim.keymap.set("n", "<leader>fg", function()
+      return builtin.live_grep({
+        additional_args = { "--glob", "!*.ldtk" },
+      })
+    end, {})
     vim.keymap.set("n", "<leader>fr", builtin.resume, {})
     vim.keymap.set("n", "<leader>fn", ":Telescope notify<CR>", {})
     vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})
