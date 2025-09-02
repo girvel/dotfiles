@@ -44,17 +44,6 @@ return {
     })
 
     vim.opt.title = true
-    -- vim.api.nvim_create_autocmd("DirChanged", {
-    --   pattern = "*",
-    --   callback = function()
-    --     local titlestring = vim.fn.getcwd()
-    --     local i, j = titlestring:find("/mnt/d/workshop/")
-    --     if i then
-    --       titlestring = titlestring:sub(1, i - 1) .. titlestring:sub(j + 1)
-    --     end
-    --     vim.opt.titlestring = titlestring
-    --   end,
-    -- })
 
     vim.diagnostic.config {
       virtual_text = true,

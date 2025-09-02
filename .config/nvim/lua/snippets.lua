@@ -19,10 +19,13 @@ return {
         "sc",
         [[
           {
+            --- @param self scene
+            --- @param dt number
             start_predicate = function(self, dt)
               return $1
             end,
 
+            --- @param self scene
             run = function(self)
               $0
             end,
@@ -33,20 +36,20 @@ return {
         "scc",
         [[
           {
-            name = "$1",
-            enabled = true,
-
             characters = {
-              $2
+              $1
             },
 
-            start_predicate = function(self, rails, dt, c)
-              return $3
+            --- @param self scene
+            --- @param dt number
+            --- @param ch railing_characters
+            start_predicate = function(self, dt, ch)
+              return $2
             end,
 
-            run = function(self, rails, c)
-              self.enabled = false
-
+            --- @param self scene
+            --- @param ch railing_characters
+            run = function(self, ch)
               $0
             end,
           },
