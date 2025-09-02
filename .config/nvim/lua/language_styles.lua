@@ -47,4 +47,7 @@ return {
   go = {
     tab = 4,
   },
+  moonspeak = {
+    tab = 2,
+  },
 }
