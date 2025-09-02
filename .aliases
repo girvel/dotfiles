@@ -74,3 +74,12 @@ function mix() {
     repomix -o ~/Desktop/repomix-output.xml
     rm github-issues-dump.json
 }
+
+autoload zmv
+setopt extendedglob
+
+function mkmv() {
+    mkdir -p -- $3:h
+    mv -- $2 $3
+}
+alias zmvd="zmv -p mkmv"
