@@ -1,4 +1,3 @@
-local builtin = require("telescope.builtin")
 local luasnip = require("luasnip")
 
 
@@ -25,24 +24,6 @@ return {
     vim.keymap.set("n", "<leader>tr", ":NvimTreeRefresh<CR>")
 
     -- telescope --
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-    vim.keymap.set("n", "<leader>fg", function()
-      return builtin.live_grep({
-        additional_args = { "--glob", "!*.ldtk" },
-      })
-    end, {})
-    vim.keymap.set("n", "<leader>fr", builtin.resume, {})
-    vim.keymap.set("n", "<leader>fn", ":Telescope notify<CR>", {})
-    vim.keymap.set('n', '<leader>fu', builtin.lsp_references, {})
-    vim.keymap.set("n", "gd", builtin.lsp_definitions, {})
-
-    vim.keymap.set("v", "<leader>fg", '"zy:Telescope live_grep default_text=<C-r>z<cr>', {})
-
-    vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-    vim.keymap.set("n", "<leader>ft", builtin.treesitter, {})
-    vim.keymap.set("n", "<leader>fd", builtin.oldfiles, {})
-
     -- lsp --
     vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, {})
     vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, {})
