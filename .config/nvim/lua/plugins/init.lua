@@ -207,4 +207,10 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {},
   },
+  {
+    "aveplen/ruscmd.nvim",
+    config = function()
+      require("ruscmd").setup {}
+    end,
+  }
 }
