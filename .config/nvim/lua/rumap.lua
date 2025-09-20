@@ -86,7 +86,7 @@ local ruscmd_collisions = {
   gd = true,
 }
 
---- Map but supporting russian layout
+--- vim.keymap.set but supporting russian layout
 return function(mode, mapping, ...)
   vim.keymap.set(mode, mapping, ...)
 
