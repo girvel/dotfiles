@@ -14,8 +14,15 @@ return {
 
     vim.keymap.set("n", "<leader>oo", function()
       local files = vim.fn.globpath(".", "**/*.lua", true, true)
-      for i, path in ipairs(files) do
-        vim.cmd("e " .. path)
+      for _, path in ipairs(files) do
+        path = vim.fn.fnamemodify(path, ":p")
+        local n = vim.fn.bufadd(path)
+        vim.fn.bufload(n)
+        vim.bo[n].buflisted = false
+      end
+
+      if #files > 0 then
+        vim.notify(("LuaLS fix: loaded %s files"):format(#files))
       end
     end, {})
 
