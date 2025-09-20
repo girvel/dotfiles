@@ -2,7 +2,7 @@ local luasnip = require("luasnip")
 
 
 return {
-  run = function()
+  init = function()
     -- my own --
     vim.keymap.set("i", "<M-o>", function()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>ggO", true, false, true), "n", false)

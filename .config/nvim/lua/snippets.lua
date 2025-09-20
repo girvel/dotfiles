@@ -2,155 +2,158 @@ local luasnip = require("luasnip")
 local language_styles = require("language_styles")
 local snippet = luasnip.parser.parse_snipmate
 
-return {
-  run = function()
-    luasnip.add_snippets('lua', {
-      snippet(
-        'ef',
-        [[
-          function()
-            return Table.extend(
-              $0
-            )
-          end
-        ]]
-      ),
-      snippet(
-        "sc",
-        [[
-          {
-            --- @param self scene
-            --- @param dt number
-            start_predicate = function(self, dt)
-              return $1
-            end,
 
-            --- @param self scene
-            run = function(self)
-              $0
-            end,
-          },
-        ]]
-      ),
-      snippet(
-        "scc",
-        [[
-          {
-            characters = {
-              $1
-            },
+local snippets = {}
 
-            --- @param self scene
-            --- @param dt number
-            --- @param ch railing_characters
-            start_predicate = function(self, dt, ch)
-              return $2
-            end,
+snippets.init = function()
+  luasnip.add_snippets('lua', {
+    snippet(
+      'ef',
+      [[
+        function()
+          return Table.extend(
+            $0
+          )
+        end
+      ]]
+    ),
+    snippet(
+      "sc",
+      [[
+        {
+          --- @param self scene
+          --- @param dt number
+          start_predicate = function(self, dt)
+            return $1
+          end,
 
-            --- @param self scene
-            --- @param ch railing_characters
-            run = function(self, ch)
-              $0
-            end,
-          },
-        ]]
-      ),
-      snippet(
-        "fn",
-        [[
-          function($1) return $2 end$0
-        ]]
-      ),
-      snippet(
-        "fnt",
-        [[
-          function($1)
-            $2
-          end$0
-        ]]
-      ),
-      snippet(
-        "de",
-        [[
-          describe("$1", function()
-            $2
-          end)$0
-        ]]
-      ),
-      snippet(
-        "it",
-        [[
-          it("$1", function()
-            $2
-          end)$0
-        ]]
-      ),
-      snippet(
-        "do",
-        [[
-          do
+          --- @param self scene
+          run = function(self)
+            $0
+          end,
+        },
+      ]]
+    ),
+    snippet(
+      "scc",
+      [[
+        {
+          characters = {
             $1
-          end$0
-        ]]
-      ),
-      snippet(
-        "ac",
+          },
+
+          --- @param self scene
+          --- @param dt number
+          --- @param ch railing_characters
+          start_predicate = function(self, dt, ch)
+            return $2
+          end,
+
+          --- @param self scene
+          --- @param ch railing_characters
+          run = function(self, ch)
+            $0
+          end,
+        },
+      ]]
+    ),
+    snippet(
+      "fn",
+      [[
+        function($1) return $2 end$0
+      ]]
+    ),
+    snippet(
+      "fnt",
+      [[
+        function($1)
+          $2
+        end$0
+      ]]
+    ),
+    snippet(
+      "de",
+      [[
+        describe("$1", function()
+          $2
+        end)$0
+      ]]
+    ),
+    snippet(
+      "it",
+      [[
+        it("$1", function()
+          $2
+        end)$0
+      ]]
+    ),
+    snippet(
+      "do",
+      [[
+        do
+          $1
+        end$0
+      ]]
+    ),
+    snippet(
+      "ac",
+      [[
+        $1 = {
+          codename = "$1",
+          get_availability = function(self, entity)
+            return $2
+          end,
+          _run = function(self, entity)
+            $3
+          end,
+        }$0
+      ]]
+    ),
+    snippet(
+      "[[",
+      [=[
         [[
-          $1 = {
-            codename = "$1",
-            get_availability = function(self, entity)
-              return $2
-            end,
-            _run = function(self, entity)
-              $3
-            end,
-          }$0
-        ]]
-      ),
-      snippet(
-        "[[",
-        [=[
-          [[
-            $1
-          ]]$0
-        ]=]
-      ),
-    })
+          $1
+        ]]$0
+      ]=]
+    ),
+  })
 
-    luasnip.add_snippets("c", {
-      snippet(
-        "for",
-        [[
-          for (size_t $1 = 0; $1 < $2; $1++) {
-              $3
-          }$0
-        ]]
-      ),
-    })
+  luasnip.add_snippets("c", {
+    snippet(
+      "for",
+      [[
+        for (size_t $1 = 0; $1 < $2; $1++) {
+            $3
+        }$0
+      ]]
+    ),
+  })
 
-    luasnip.add_snippets("zig", {
-      snippet("pp", [[std.debug.print("$1\n", .{$2});$0]]),
-    })
+  luasnip.add_snippets("zig", {
+    snippet("pp", [[std.debug.print("$1\n", .{$2});$0]]),
+  })
 
-    for language, data in pairs(language_styles) do
-      local tab = string.rep(" ", data.tab)
-      luasnip.add_snippets(language, {
-        snippet("{", ([[
-          {
-          %s$1
-          }$0
-        ]]):format(tab)),
-        snippet("(", ([[
-          (
-          %s$1
-          )$0
-        ]]):format(tab)),
-        snippet("[", ([[
-          [
-          %s$1
-          ]$0
-        ]]):format(tab)),
-      })
-    end
-  end,
-}
+  for language, data in pairs(language_styles) do
+    local tab = string.rep(" ", data.tab)
+    luasnip.add_snippets(language, {
+      snippet("{", ([[
+        {
+        %s$1
+        }$0
+      ]]):format(tab)),
+      snippet("(", ([[
+        (
+        %s$1
+        )$0
+      ]]):format(tab)),
+      snippet("[", ([[
+        [
+        %s$1
+        ]$0
+      ]]):format(tab)),
+    })
+  end
+end
+
+return snippets

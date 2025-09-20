@@ -1,55 +1,57 @@
 local language_styles = require("language_styles")
 
 
-return {
-  run = function()
-    vim.opt.relativenumber = true
-    vim.opt.number = true
+local opt = {}
 
-    vim.opt.tabstop = 4
-    vim.opt.shiftwidth = 4
-    vim.opt.softtabstop = 4
+opt.init = function()
+  vim.opt.relativenumber = true
+  vim.opt.number = true
 
-    vim.opt.expandtab = true
+  vim.opt.tabstop = 4
+  vim.opt.shiftwidth = 4
+  vim.opt.softtabstop = 4
 
-    vim.opt.autoindent = true
-    vim.opt.smartindent = false
-    vim.opt.cindent = false
+  vim.opt.expandtab = true
 
-    vim.opt.termguicolors = true
+  vim.opt.autoindent = true
+  vim.opt.smartindent = false
+  vim.opt.cindent = false
 
-    vim.g.mapleader = " "
+  vim.opt.termguicolors = true
 
-    vim.cmd("filetype indent off")
-    vim.cmd(":set cc=100")
+  vim.g.mapleader = " "
 
-    for lang, data in pairs(language_styles) do
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = lang,
-        callback = function()
-          vim.opt_local.tabstop = data.tab
-          vim.opt_local.shiftwidth = data.tab
-          vim.opt_local.softtabstop = data.tab
-        end
-      })
-    end
+  vim.cmd("filetype indent off")
+  vim.cmd(":set cc=100")
 
+  for lang, data in pairs(language_styles) do
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = "html",
+      pattern = lang,
       callback = function()
-        vim.opt_local.tabstop = 2
-        vim.opt_local.shiftwidth = 2
-        vim.opt_local.softtabstop = 2
+        vim.opt_local.tabstop = data.tab
+        vim.opt_local.shiftwidth = data.tab
+        vim.opt_local.softtabstop = data.tab
       end
     })
+  end
 
-    vim.opt.title = true
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "html",
+    callback = function()
+      vim.opt_local.tabstop = 2
+      vim.opt_local.shiftwidth = 2
+      vim.opt_local.softtabstop = 2
+    end
+  })
 
-    vim.diagnostic.config {
-      virtual_text = true,
-      signs = true,
-      underline = true,
-      update_in_insert = false,
-    }
-  end,
-}
+  vim.opt.title = true
+
+  vim.diagnostic.config {
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+  }
+end
+
+return opt
