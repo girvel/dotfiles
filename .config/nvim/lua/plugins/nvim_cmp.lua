@@ -1,0 +1,59 @@
+return {
+  {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      local luasnip = require("luasnip")
+      local cmp = require("cmp")
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+
+        mapping = {
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<M-Up>"] = cmp.mapping.select_prev_item(),
+          ["<M-Down>"] = cmp.mapping.select_next_item(),
+          ["<C-S-f>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<Tab>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+          }),
+        },
+
+        sources = {
+          { name = "path" },
+          { name = "nvim_lsp", keyword_length = 3 },
+          { name = "nvim_lsp_signature_help" },
+          { name = "nvim_lua", keyword_length = 2 },
+          { name = "buffer", keyword_length = 2 },
+          { name = "luasnip" },
+          { name = "calc" },
+        },
+
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+
+        formatting = {
+          fields = {"menu", "abbr", "kind"},
+          format = function(_, item)
+            return item
+          end,
+        },
+      })
+    end,
+  },
+  {"hrsh7th/cmp-nvim-lsp"},
+  {"hrsh7th/cmp-nvim-lua"},
+  {"hrsh7th/cmp-nvim-lsp-signature-help"},
+  {"hrsh7th/cmp-path"},
+  {"hrsh7th/cmp-buffer"},
+  {"saadparwaiz1/cmp_luasnip"},
+}
