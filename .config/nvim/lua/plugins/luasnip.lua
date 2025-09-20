@@ -3,6 +3,6 @@ return {
   config = function()
     require("luasnip.loaders.from_lua").load({paths = "./snippets"})
     local luasnip = require("luasnip")
-    vim.keymap.set("i", "<M-CR>", function() luasnip.jump(1) end, {silent = true})
+    Map("i", "<M-CR>", function() luasnip.jump(1) end, {silent = true})
   end,
 }

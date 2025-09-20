@@ -1,3 +1,5 @@
+Map = require("rumap")
+
 require("opt").init()
 require("package_manager").init()
 require("snippets").init()

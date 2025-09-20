@@ -27,7 +27,7 @@ return {
       }
     })
 
-    vim.keymap.set("n", "<leader>oo", function()
+    Map("n", "<leader>oo", function()
       local files = vim.fn.globpath(".", "**/*.lua", true, true)
       for _, path in ipairs(files) do
         path = vim.fn.fnamemodify(path, ":p")

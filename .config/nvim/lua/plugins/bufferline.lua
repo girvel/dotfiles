@@ -8,13 +8,13 @@ return {
       },
     }
 
-    vim.keymap.set("n", "ZZ", "<cmd>w<CR><cmd>bdelete<CR><cmd>bprev<CR>", {})
+    Map("n", "ZZ", "<cmd>w<CR><cmd>bdelete<CR><cmd>bprev<CR>", {})
     for _, mode in ipairs {"n", "t"} do
       local prefix = mode == "t" and "<Esc>" or ""
       for _, keypair in ipairs {{"Left", "Right"}, {"h", "l"}} do
         local left, right = unpack(keypair)
-        vim.keymap.set(mode, "<C-" .. left .. ">",  prefix .. "<cmd>bprev<CR>", {})
-        vim.keymap.set(mode, "<C-" .. right .. ">", prefix .. "<cmd>bnext<CR>", {})
+        Map(mode, "<C-" .. left .. ">",  prefix .. "<cmd>bprev<CR>", {})
+        Map(mode, "<C-" .. right .. ">", prefix .. "<cmd>bnext<CR>", {})
       end
     end
   end,
