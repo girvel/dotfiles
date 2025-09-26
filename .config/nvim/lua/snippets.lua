@@ -21,13 +21,13 @@ snippets.init = function()
       "sc",
       [[
         {
-          --- @param self scene
+          --- @param self scene|table
           --- @param dt number
           start_predicate = function(self, dt)
             return $1
           end,
 
-          --- @param self scene
+          --- @param self scene|table
           run = function(self)
             $0
           end,
@@ -42,15 +42,15 @@ snippets.init = function()
             $1
           },
 
-          --- @param self scene
+          --- @param self scene|table
           --- @param dt number
-          --- @param ch railing_characters
+          --- @param ch rails_characters
           start_predicate = function(self, dt, ch)
             return $2
           end,
 
-          --- @param self scene
-          --- @param ch railing_characters
+          --- @param self scene|table
+          --- @param ch rails_characters
           run = function(self, ch)
             $0
           end,

@@ -83,3 +83,24 @@ function mkmv() {
     mv -- $2 $3
 }
 alias zmvd="zmv -p mkmv"
+
+# Conflicts with neovim embedded terminal
+bindkey -r "^[a" accept-and-hold
+bindkey -r "^[b" backward-word
+bindkey -r "^[c" capitalize-word
+bindkey -r "^[d" kill-word
+bindkey -r "^[f" forward-word
+bindkey -r "^[g" get-line
+bindkey -r "^[h" run-help
+bindkey -r "^[l" "ls^J"
+bindkey -r "^[m" copy-prev-shell-word
+bindkey -r "^[n" history-search-forward
+bindkey -r "^[p" history-search-backward
+bindkey -r "^[q" push-line
+bindkey -r "^[s" spell-word
+bindkey -r "^[t" transpose-words
+bindkey -r "^[u" up-case-word
+bindkey -r "^[w" kill-region
+bindkey -r "^[x" execute-named-cmd
+bindkey -r "^[y" yank-pop
+bindkey -r "^[z" execute-last-named-cmd

@@ -4,7 +4,7 @@
 [push]
 	autoSetupRemote = true
 [core]
-	editor = nvr --remote-wait
+	editor = nvim
 	autocrlf = input
 [diff]
 	algorithm = histogram
