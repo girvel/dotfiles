@@ -8,23 +8,14 @@ local snippets = {}
 snippets.init = function()
   luasnip.add_snippets('lua', {
     snippet(
-      'ef',
-      [[
-        function()
-          return Table.extend(
-            $0
-          )
-        end
-      ]]
-    ),
-    snippet(
       "sc",
       [[
-        {
+        --- @type scene|table
+        $1 = {
           --- @param self scene|table
           --- @param dt number
           start_predicate = function(self, dt)
-            return $1
+            return $2
           end,
 
           --- @param self scene|table
@@ -37,16 +28,17 @@ snippets.init = function()
     snippet(
       "scc",
       [[
-        {
+        --- @type scene|table
+        $1 = {
           characters = {
-            $1
+            $2
           },
 
           --- @param self scene|table
           --- @param dt number
           --- @param ch rails_characters
           start_predicate = function(self, dt, ch)
-            return $2
+            return $3
           end,
 
           --- @param self scene|table

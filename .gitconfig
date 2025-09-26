@@ -20,5 +20,3 @@
 	helper = !/usr/bin/gh auth git-credential
 [init]
 	defaultBranch = master
-[http]
-	proxy = socks5://192.168.0.240:1080
