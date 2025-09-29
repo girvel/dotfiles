@@ -36,14 +36,16 @@ snippets.init = function()
 
           --- @param self scene|table
           --- @param dt number
-          --- @param ch rails_characters
-          start_predicate = function(self, dt, ch)
+          --- @param ch runner_characters
+          --- @param ps runner_positions
+          start_predicate = function(self, dt, ch, ps)
             return $3
           end,
 
           --- @param self scene|table
-          --- @param ch rails_characters
-          run = function(self, ch)
+          --- @param ch runner_characters
+          --- @param ps runner_positions
+          run = function(self, ch, ps)
             $0
           end,
         },
