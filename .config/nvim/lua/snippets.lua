@@ -12,13 +12,10 @@ snippets.init = function()
       [[
         --- @type scene|table
         $1 = {
-          --- @param self scene|table
-          --- @param dt number
           start_predicate = function(self, dt)
             return $2
           end,
 
-          --- @param self scene|table
           run = function(self)
             $0
           end,
@@ -34,17 +31,10 @@ snippets.init = function()
             $2
           },
 
-          --- @param self scene|table
-          --- @param dt number
-          --- @param ch runner_characters
-          --- @param ps runner_positions
           start_predicate = function(self, dt, ch, ps)
             return $3
           end,
 
-          --- @param self scene|table
-          --- @param ch runner_characters
-          --- @param ps runner_positions
           run = function(self, ch, ps)
             $0
           end,
