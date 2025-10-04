@@ -2,6 +2,7 @@ local luals_fix = require "luals_fix"
 return {
   "akinsho/bufferline.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
+
   opts = {
     options = {
       separator_style = "slant",
@@ -18,6 +19,7 @@ return {
       },
     },
   },
+
   config = function(_, opts)
     require("bufferline").setup(opts)
 
@@ -43,5 +45,6 @@ return {
       vim.schedule(luals_fix.feed)
     end, {})
     Map("n", "<leader>bc", "<cmd>set nobl<CR><cmd>b#<CR>", {})
+
   end,
 }
