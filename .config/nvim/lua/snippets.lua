@@ -42,6 +42,72 @@ snippets.init = function()
       ]]
     ),
     snippet(
+      "spl",
+      [[
+        sp:lines()$0
+      ]]
+    ),
+    snippet(
+      "spb",
+      [[
+        sp:start_branch($1)
+          $0
+        sp:finish_branch()
+      ]]
+    ),
+    snippet(
+      "spbs",
+      [[
+        sp:start_branches()
+          $0
+        sp:finish_branches()
+      ]]
+    ),
+    snippet(
+      "sps",
+      [[
+        sp:start_single_branch($1)
+          $0
+        sp:finish_single_branch()
+      ]]
+    ),
+    snippet(
+      "spos",
+      [[
+        api.options(sp:start_options())
+          $0
+        sp:finish_options()
+      ]]
+    ),
+    snippet(
+      "spoi",
+      [[
+        if api.options(sp:start_options()) == $1 then return end
+        sp:finish_options()$0
+      ]]
+    ),
+    snippet(
+      "spon",
+      [[
+        if api.options(sp:start_options()) ~= $1 then return end
+        sp:finish_options()$0
+      ]]
+    ),
+    snippet(
+      "spo",
+      [[
+        sp:start_option($1)
+          $0
+        sp:finish_option()
+      ]]
+    ),
+    snippet(
+      "ac",
+      [[
+        ch.player:ability_check($1)$0
+      ]]
+    ),
+    snippet(
       "fn",
       [[
         function($1) return $2 end$0
