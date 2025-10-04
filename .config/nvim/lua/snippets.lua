@@ -122,6 +122,14 @@ snippets.init = function()
       ]]
     ),
     snippet(
+      "fnt,",
+      [[
+        function($1)
+          $2
+        end,$0
+      ]]
+    ),
+    snippet(
       "de",
       [[
         describe("$1", function()
@@ -184,25 +192,36 @@ snippets.init = function()
     snippet("pp", [[std.debug.print("$1\n", .{$2});$0]]),
   })
 
+  local pair_chars = {
+    {"{", "}", true},
+    {"(", ")", true},
+    {"[", "]", true},
+    {"<", ">", false},
+    -- (don't work)
+    -- {'"', '"', false},
+    -- {"'", "'", false},
+  }
+
   for language, data in pairs(language_styles) do
     local tab = string.rep(" ", data.tab)
-    luasnip.add_snippets(language, {
-      snippet("{", ([[
-        {
-        %s$1
-        }$0
-      ]]):format(tab)),
-      snippet("(", ([[
-        (
-        %s$1
-        )$0
-      ]]):format(tab)),
-      snippet("[", ([[
-        [
-        %s$1
-        ]$0
-      ]]):format(tab)),
-    })
+    for _, t in ipairs(pair_chars) do
+      local start, finish, expands = unpack(t)
+
+      if expands then
+        luasnip.add_snippets(language, {
+          snippet(start, ([[
+            %s
+            %s$1
+            %s$0
+          ]]):format(start, tab, finish))
+        })
+      end
+
+      luasnip.add_snippets(language, {
+        snippet(start .. finish,           start .. "$1" .. finish .. "$0"),
+        snippet(start .. finish .. finish, start .. "$1" .. finish .. ",$0")
+      })
+    end
   end
 end
 
