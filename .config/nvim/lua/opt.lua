@@ -27,6 +27,15 @@ opt.init = function()
   vim.cmd("filetype indent off")
   vim.cmd(":set cc=100")
 
+  vim.opt.title = true
+  vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    callback = function()
+      local _, _, title = vim.fn.getcwd():find("/([^/]*)$")
+      vim.opt.titlestring = (title or "/"):upper()
+    end,
+  })
+
   for lang, data in pairs(language_styles) do
     vim.api.nvim_create_autocmd("FileType", {
       pattern = lang,
@@ -46,8 +55,6 @@ opt.init = function()
       vim.opt_local.softtabstop = 2
     end
   })
-
-  vim.opt.title = true
 
   vim.diagnostic.config {
     virtual_text = true,
