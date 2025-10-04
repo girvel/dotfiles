@@ -1,3 +1,4 @@
+local luals_fix = require "luals_fix"
 return {
   "akinsho/bufferline.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
@@ -29,10 +30,18 @@ return {
       end
     end
 
-    Map("n", "<leader>bl", "<cmd>BufferLineCloseRight<CR>", {})
-    Map("n", "<leader>bh", "<cmd>BufferLineCloseLeft<CR>", {})
-    Map("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", {})
-    Map("n", "<leader>bb", "<cmd>BufferLineGoToBuffer 1<CR>", {})
-    Map("n", "<leader>bc", "<cmd>w<CR><cmd>bdelete<CR><cmd>bprev<CR>", {})
+    Map("n", "<leader>bl", function()
+      vim.cmd("BufferLineCloseRight")
+      vim.schedule(luals_fix.feed)
+    end, {})
+    Map("n", "<leader>bh", function()
+      vim.cmd("BufferLineCloseLeft")
+      vim.schedule(luals_fix.feed)
+    end, {})
+    Map("n", "<leader>bo", function()
+      vim.cmd("BufferLineCloseOthers")
+      vim.schedule(luals_fix.feed)
+    end, {})
+    Map("n", "<leader>bc", "<cmd>set nobl<CR><cmd>b#<CR>", {})
   end,
 }
