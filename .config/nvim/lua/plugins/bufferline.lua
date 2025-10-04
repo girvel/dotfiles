@@ -36,15 +36,28 @@ return {
       vim.cmd("BufferLineCloseRight")
       vim.schedule(luals_fix.feed)
     end, {})
+
     Map("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
       vim.schedule(luals_fix.feed)
     end, {})
+
     Map("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
       vim.schedule(luals_fix.feed)
     end, {})
-    Map("n", "<leader>bc", "<cmd>set nobl<CR><cmd>b#<CR>", {})
 
+    Map("n", "<leader>bc", function()
+      local listed_buffers = vim.tbl_filter(function(n)
+        return vim.api.nvim_buf_is_loaded(n) and vim.bo[n].buflisted
+      end, vim.api.nvim_list_bufs())
+
+      vim.bo.buflisted = false
+      if #listed_buffers == 1 then
+        vim.cmd("enew")
+      else
+        vim.cmd("b#")
+      end
+    end, {})
   end,
 }

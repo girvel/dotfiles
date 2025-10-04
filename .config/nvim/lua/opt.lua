@@ -16,6 +16,9 @@ opt.init = function()
   -- neotree for some reason folds all files until unusable
   vim.opt.foldmethod = "manual"
 
+  -- neotree is unstable shit
+  vim.opt.splitright = true
+
   vim.opt.autoindent = true
   vim.opt.smartindent = false
   vim.opt.cindent = false
