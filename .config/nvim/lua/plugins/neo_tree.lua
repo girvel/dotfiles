@@ -8,17 +8,13 @@ return {
   },
   lazy = false,
   opts = {
+    popup_border_style = "rounded",
     filesystem = {
       filtered_items = {
         visible = false,
         hide_dotfiles = false,
         hide_gitignored = false,
       },
-    },
-    window = {
-      mappings = {
-        ["m"] = {"move", config = {show_path = "absolute"}}
-      }
     },
     default_component_configs = {
       git_status = {

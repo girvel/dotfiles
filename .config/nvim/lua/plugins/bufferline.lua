@@ -1,12 +1,24 @@
 return {
   "akinsho/bufferline.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
-  config = function()
-    require("bufferline").setup {
-      options = {
-        separator_style = "slant",
+  opts = {
+    options = {
+      separator_style = "slant",
+      offsets = {
+        {
+          filetype = "neo-tree",
+          text = "Neo-tree",
+          highlight = "Directory",
+          text_align = "left",
+        },
+        {
+          filetype = "snacks_layout_box",
+        },
       },
-    }
+    },
+  },
+  config = function(_, opts)
+    require("bufferline").setup(opts)
 
     for _, mode in ipairs {"n", "t", "i"} do
       local prefix = mode == "n" and "" or "<Esc>"
