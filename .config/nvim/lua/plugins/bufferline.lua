@@ -8,8 +8,8 @@ return {
       },
     }
 
-    for _, mode in ipairs {"n", "t"} do
-      local prefix = mode == "t" and "<Esc>" or ""
+    for _, mode in ipairs {"n", "t", "i"} do
+      local prefix = mode == "n" and "" or "<Esc>"
       for _, keypair in ipairs {{"Left", "Right"}, {"h", "l"}} do
         local left, right = unpack(keypair)
         Map(mode, "<C-" .. left .. ">",  prefix .. "<cmd>BufferLineCyclePrev<CR>", {})
