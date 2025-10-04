@@ -1,9 +1,7 @@
 return {
   "neovim/nvim-lspconfig",
   config = function()
-    local lspconfig = require("lspconfig")
-
-    lspconfig.lua_ls.setup({
+    vim.lsp.config.lua_ls = {
       settings = {
         Lua = {
           runtime = {
@@ -25,7 +23,7 @@ return {
           },
         }
       }
-    })
+    }
 
     Map("n", "<leader>oo", function()
       local files = vim.fn.globpath(".", "**/*.lua", true, true)
@@ -41,22 +39,22 @@ return {
       end
     end, {})
 
-    lspconfig.clangd.setup {}
+    vim.lsp.config.clangd = {}
 
-    lspconfig.zls.setup {}
+    vim.lsp.config.zls = {}
     vim.g.zig_fmt_autosave = 0
 
-    lspconfig.glsl_analyzer.setup {}
+    vim.lsp.config.glsl_analyzer = {}
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-    lspconfig.cssls.setup {
+    vim.lsp.config.cssls = {
       capabilities = capabilities,
     }
 
-    lspconfig.jedi_language_server.setup {}
+    vim.lsp.config.jedi_language_server = {}
 
-    lspconfig.gopls.setup {}
+    vim.lsp.config.gopls = {}
   end,
 }
