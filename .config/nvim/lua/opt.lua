@@ -13,6 +13,9 @@ opt.init = function()
 
   vim.opt.expandtab = true
 
+  -- neotree for some reason folds all files until unusable
+  vim.opt.foldmethod = "manual"
+
   vim.opt.autoindent = true
   vim.opt.smartindent = false
   vim.opt.cindent = false
