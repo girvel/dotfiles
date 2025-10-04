@@ -6,9 +6,6 @@ return {
       "telescope",
       "notify",
     },
-    plugins = {
-      underline_selected = true,
-    },
   },
   config = function(_, opts)
     if vim.env.TERM == "linux" then return end
