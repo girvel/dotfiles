@@ -40,7 +40,10 @@ return {
       pattern = '*',
       callback = function()
         vim.schedule(function()
-          for _, id in ipairs(vim.api.nvim_list_wins()) do
+          local windows = vim.api.nvim_list_wins()
+          if #windows == 1 then return end
+
+          for _, id in ipairs(windows) do
             local buf = vim.api.nvim_win_get_buf(id)
             if vim.bo[buf].filetype == "" then
               vim.api.nvim_win_close(id, true)
