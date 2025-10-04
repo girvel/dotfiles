@@ -2,7 +2,13 @@ local luals_fix = require "luals_fix"
 return {
   "neovim/nvim-lspconfig",
   config = function()
+    local is_attached = false
     vim.lsp.config.lua_ls = {
+      on_attach = function()
+        if is_attached then return end
+        is_attached = true
+        vim.schedule(luals_fix.feed)
+      end,
       settings = {
         Lua = {
           runtime = {
