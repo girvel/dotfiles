@@ -36,17 +36,13 @@ return {
     require("neo-tree").setup(opts)
     Map("n", "<leader>tf", ":Neotree<CR>")
 
-    vim.api.nvim_create_autocmd('VimEnter', {
+    -- removing empty buffers
+    vim.api.nvim_create_autocmd('BufAdd', {
       pattern = '*',
       callback = function()
         vim.schedule(function()
-          local windows = vim.api.nvim_list_wins()
-          if #windows == 1 then return end
-
-          for _, id in ipairs(windows) do
-            local buf = vim.api.nvim_win_get_buf(id)
+          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
             if vim.bo[buf].filetype == "" then
-              vim.api.nvim_win_close(id, true)
               vim.api.nvim_buf_delete(buf, {force = true})
               break
             end
