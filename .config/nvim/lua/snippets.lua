@@ -154,20 +154,6 @@ snippets.init = function()
       ]]
     ),
     snippet(
-      "ac",
-      [[
-        $1 = {
-          codename = "$1",
-          get_availability = function(self, entity)
-            return $2
-          end,
-          _run = function(self, entity)
-            $3
-          end,
-        }$0
-      ]]
-    ),
-    snippet(
       "[[",
       [=[
         [[
