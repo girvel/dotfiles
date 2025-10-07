@@ -1,6 +1,7 @@
 local luals_fix = {}
 
-luals_fix.feed = function()
+--- @param silent? boolean
+luals_fix.feed = function(silent)
   local files = vim.fn.globpath(".", "**/*.lua", true, true)
   local counter = 0
   for _, path in ipairs(files) do
@@ -13,7 +14,7 @@ luals_fix.feed = function()
     end
   end
 
-  if #files > 0 then
+  if not silent and #files > 0 then
     vim.notify(("LuaLS fix: loaded %s files"):format(counter))
   end
 end

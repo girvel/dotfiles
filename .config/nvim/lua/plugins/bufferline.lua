@@ -34,17 +34,17 @@ return {
 
     Map("n", "<leader>bl", function()
       vim.cmd("BufferLineCloseRight")
-      vim.schedule(luals_fix.feed)
+      vim.schedule(function() luals_fix.feed(true) end)
     end, {})
 
     Map("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
-      vim.schedule(luals_fix.feed)
+      vim.schedule(function() luals_fix.feed(true) end)
     end, {})
 
     Map("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
-      vim.schedule(luals_fix.feed)
+      vim.schedule(function() luals_fix.feed(true) end)
     end, {})
 
     Map("n", "<leader>bc", function()
