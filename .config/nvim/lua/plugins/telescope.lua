@@ -28,5 +28,6 @@ return {
     Map("n", "<leader>fh", builtin.help_tags, {})
     -- Map("n", "<leader>ft", builtin.treesitter, {})
     -- Map("n", "<leader>fb", builtin.buffers, {})
+    Map("v", "<leader>rr", '"zy:%s/<C-r>z/<C-r>z')
   end,
 }
