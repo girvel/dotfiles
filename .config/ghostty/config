@@ -1,3 +1,4 @@
 keybind = alt+left=previous_tab
 keybind = alt+right=next_tab
 gtk-titlebar-style = tabs
+gtk-wide-tabs = false
