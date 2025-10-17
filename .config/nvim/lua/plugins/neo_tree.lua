@@ -42,7 +42,7 @@ return {
       callback = function()
         vim.schedule(function()
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.bo[buf].filetype == "" then
+            if vim.bo[buf].filetype == "" and vim.api.nvim_buf_get_name(buf) == "" then
               vim.api.nvim_buf_delete(buf, {force = true})
               break
             end
