@@ -4,6 +4,8 @@ return {
     config = function()
       local luasnip = require("luasnip")
       local cmp = require("cmp")
+      local lspkind = require("lspkind")
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -42,10 +44,16 @@ return {
         },
 
         formatting = {
-          fields = {"menu", "abbr", "kind"},
-          format = function(_, item)
-            return item
-          end,
+          fields = { "kind", "abbr", "menu" },
+          format = lspkind.cmp_format {
+            mode = "symbol",
+            maxwidth = {
+              menu = 50,
+              abbr = 50,
+            },
+            ellipsis_char = '...',
+            show_labelDetails = true,
+          },
         },
       })
     end,
@@ -56,4 +64,5 @@ return {
   {"hrsh7th/cmp-path"},
   {"hrsh7th/cmp-buffer"},
   {"saadparwaiz1/cmp_luasnip"},
+  {"onsails/lspkind.nvim"},
 }
