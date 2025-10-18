@@ -5,7 +5,7 @@ return {
   ---@type ibl.config
   opts = {
     indent = {char = "┊", highlight = "IblIndent1"},
-    scope = {char = "┋", highlight = "IblScope1"},
+    scope = {char = "┋", highlight = "IblScope1", show_start = false, show_end = false},
     exclude = {
       filetypes = {
         "help",
