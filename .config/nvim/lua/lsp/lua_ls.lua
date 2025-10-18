@@ -18,12 +18,8 @@ lua_ls.feed = function(silent)
   end
 end
 
-lua_ls.auto_require = function(on_complete)
-  local complete = function()
-    if not on_complete then return end
-    vim.schedule(on_complete)
-  end
-
+--- @async
+lua_ls.auto_require = function()
   local menu = require("nui.menu")
   local input = require("nui.input")
   local event = require("nui.utils.autocmd").event
@@ -59,6 +55,7 @@ lua_ls.auto_require = function(on_complete)
     )
   end
 
+  local modpath
   if #candidates == 0 then
     local this_input = input({
       position = "50%",
@@ -75,63 +72,58 @@ lua_ls.auto_require = function(on_complete)
       },
     }, {
       prompt = "> ",
-      on_submit = function(value)
-        insert_require(value)
-        Api.feed("a")
-        complete()
-      end,
+      on_submit = Api.resume(),
     })
 
     this_input:mount()
     this_input:on(event.BufLeave, function()
       this_input:unmount()
     end)
-    return
+    modpath = coroutine.yield()
+  else
+    Api.feed('<Esc>')
+    Api.step()
+
+    if #candidates == 1 then
+      modpath = candidates[1].text
+      vim.notify(("Required %q"):format(modpath))
+    else
+      local this_menu = menu(
+        {
+          position = "50%",
+          size = {
+            width = 25,
+            height = 7,
+          },
+          border = {
+            style = "single",
+            text = {
+              top = " require ",
+              top_align = "center",
+            },
+          },
+          win_options = {
+            winhighlight = "Normal:Normal,FloatBorder:Normal",
+          },
+        },
+        {
+          lines = candidates,
+          on_submit = Api.resume(function(item)
+            return item.text
+          end),
+        }
+      )
+      this_menu:mount()
+      this_menu:on(event.BufLeave, function()
+        this_menu:unmount()
+      end)
+      modpath = coroutine.yield()
+    end
   end
 
-  Api.feed('<Esc>')
-
-  if #candidates == 1 then
-    vim.schedule(function()
-      local modpath = candidates[1].text
-      insert_require(modpath)
-      vim.notify(("Required %q"):format(modpath))
-      Api.feed("a")
-      complete()
-    end)
-    return end
-
-  local this_menu = menu(
-    {
-      position = "50%",
-      size = {
-        width = 25,
-        height = 7,
-      },
-      border = {
-        style = "single",
-        text = {
-          top = " require ",
-          top_align = "center",
-        },
-      },
-      win_options = {
-        winhighlight = "Normal:Normal,FloatBorder:Normal",
-      },
-    },
-    {
-      lines = candidates,
-      on_submit = function(item)
-        insert_require(item.text)
-        Api.feed("a")
-        complete()
-      end,
-    }
-  )
-  this_menu:mount()
-  this_menu:on(event.BufLeave, function()
-    this_menu:unmount()
-  end)
+  insert_require(modpath)
+  Api.feed("a")
+  Api.step()
 end
 
 local is_attached = false
@@ -146,13 +138,13 @@ lua_ls.config = {
     Api.rumap("i", "<M-.>", Api.async(function()
       local cmp = require("cmp")
 
-      Api.await(lua_ls.auto_require)
+      lua_ls.auto_require()
       vim.api.nvim_put({"."}, "c", true, true)
 
       Api.sleep(20)
       cmp.complete()
     end), {})
-    Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
+    Api.rumap("i", "<M-,>", Api.async(lua_ls.auto_require), {})
   end,
   settings = {
     Lua = {

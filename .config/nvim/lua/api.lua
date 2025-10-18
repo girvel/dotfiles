@@ -31,6 +31,7 @@ api.async = function(f)
   end
 end
 
+-- NEXT use resume
 api.await = function(f, ...)
   local current = coroutine.running()
   assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
@@ -72,5 +73,24 @@ api.callback_here = {}
 
 api.step = function() api.await(vim.schedule) end
 api.sleep = function(ms) api.await(vim.defer_fn, ms) end
+
+api.resume = function(f)
+  local current = coroutine.running()
+  assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
+  return function(...)
+    if coroutine.status(current) == "suspended" then
+      local result
+      if f then
+        result = {coroutine.resume(current, f(...))}
+      else
+        result = {coroutine.resume(current, ...)}
+      end
+      table.remove(result, 1)
+      return result
+    end
+
+    return f(...)
+  end
+end
 
 return api
