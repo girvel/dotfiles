@@ -25,4 +25,41 @@ end
 
 api.rumap = require("api.rumap")
 
+api.async = function(f)
+  return function(...)
+    coroutine.resume(coroutine.create(f), ...)
+  end
+end
+
+api.await = function(f, ...)
+  local current = coroutine.running()
+  assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
+
+  local result = nil
+
+  local args = {}
+  for i = 1, select("#", ...) do
+    local arg = select(i, ...)
+    if arg == api.callback_here then
+      arg = function(...)
+        result = {...}
+        if coroutine.status(current) == "suspended" then
+          coroutine.resume(current)
+        end
+      end
+    end
+    args[i] = arg
+  end
+
+  f(unpack(args))
+
+  if result == nil then
+    coroutine.yield()
+  end  --- @cast result table
+
+  return unpack(result)
+end
+
+api.callback_here = {}
+
 return api

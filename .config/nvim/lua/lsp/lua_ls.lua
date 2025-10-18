@@ -143,15 +143,13 @@ lua_ls.config = {
     vim.schedule(lua_ls.feed)
 
     Api.rumap("n", "<leader>oo", lua_ls.feed, {})
-    Api.rumap("i", "<M-.>", function()
-      lua_ls.auto_require(function()
-        local cmp = require("cmp")
-        vim.api.nvim_put({"."}, "c", true, true)
-        vim.defer_fn(function()
-          cmp.complete()
-        end, 20)
-      end)
-    end, {})
+    Api.rumap("i", "<M-.>", Api.async(function()
+      local cmp = require("cmp")
+      Api.await(lua_ls.auto_require, Api.callback_here)
+      vim.api.nvim_put({"."}, "c", true, true)
+      Api.await(vim.defer_fn, Api.callback_here, 20)
+      cmp.complete()
+    end), {})
     Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
   end,
   settings = {
