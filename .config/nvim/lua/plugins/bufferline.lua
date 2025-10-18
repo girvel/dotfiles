@@ -1,4 +1,6 @@
-local luals_fix = require "luals_fix"
+local lua_ls = require("lsp.lua_ls")
+
+
 return {
   "akinsho/bufferline.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
@@ -34,17 +36,17 @@ return {
 
     Map("n", "<leader>bl", function()
       vim.cmd("BufferLineCloseRight")
-      vim.schedule(function() luals_fix.feed(true) end)
+      vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
     Map("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
-      vim.schedule(function() luals_fix.feed(true) end)
+      vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
     Map("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
-      vim.schedule(function() luals_fix.feed(true) end)
+      vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
     Map("n", "<leader>bc", function()
