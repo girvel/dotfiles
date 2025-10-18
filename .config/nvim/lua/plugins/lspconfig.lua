@@ -62,6 +62,29 @@ return {
           :totable()
       end
 
+      if #candidates == 0 then
+        -- NEXT use word distance & stuff to suggest nearest
+        vim.notify(('%q module not found'):format(word))
+        return
+      end
+
+      local insert_require = function(modpath)
+        vim.api.nvim_buf_set_lines(
+          buf, 0, 0, false,
+          {('local %s = require("%s")'):format(word, modpath)}
+        )
+      end
+
+      -- NEXT insert the .
+
+      -- NEXT undo only the insert, not the insert + typing before
+      if #candidates == 1 then
+        local modpath = candidates[1].text
+        insert_require(modpath)
+        vim.notify(("Required %q"):format(modpath))
+        return
+      end
+
       Api.feed('<Esc>')
       menu(
         {
@@ -84,11 +107,8 @@ return {
         {
           lines = candidates,
           on_submit = function(item)
-            -- NEXT no menu if # == 0, but notify
-            vim.api.nvim_buf_set_lines(
-              buf, 0, 0, false,
-              {('local %s = require("%s")'):format(Api.luapath_head(item.text), item.text)}
-            )
+            insert_require(item.text)
+            Api.feed("a")
           end,
         }
       ):mount()
