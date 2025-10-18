@@ -17,10 +17,6 @@ return {
     vim.cmd.colorscheme("monokai-pro")
 
     local palette = require("monokai-pro.colorscheme.palette." .. THEME)
-    vim.schedule(function()
-      vim.notify(vim.inspect(palette))
-    end)
-
     vim.api.nvim_set_hl(0, "LspPreview", { bg = palette.dark1 })
     vim.api.nvim_set_hl(0, "LspPreviewBorder", { bg = palette.dark1, fg = palette.dimmed2 })
   end

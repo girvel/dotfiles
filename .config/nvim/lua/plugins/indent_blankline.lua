@@ -6,6 +6,26 @@ return {
   opts = {
     indent = {char = "┊", highlight = "IblIndent1"},
     scope = {char = "┋", highlight = "IblScope1"},
+    exclude = {
+      filetypes = {
+        "help",
+        "alpha",
+        "dashboard",
+        "neo-tree",
+        "trouble",
+        "lazy",
+        "mason",
+        "notify",
+        "toggleterm",
+        "lazyterm",
+      },
+      buftypes = {
+        "terminal",
+        "nofile",
+        "quickfix",
+        "prompt",
+      },
+    },
   },
   config = function(_, opts)
     vim.api.nvim_set_hl(0, "IblIndent1", { fg = "#363537" })
