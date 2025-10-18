@@ -56,6 +56,10 @@ return {
           documentation = cmp.config.window.bordered(),
         },
 
+        performance = {
+          max_view_entries = 20,
+        },
+
         formatting = {
           fields = { "kind", "abbr", "menu" },
           format = lspkind.cmp_format {
