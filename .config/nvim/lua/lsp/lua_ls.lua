@@ -1,30 +1,38 @@
 local lua_ls = {}
 
 -- TODO loading animation
+-- TODO progress bar
+-- TODO UI elements: input, menu, progress bar
+-- TODO lua/api: Api, Ui, Async
+-- TODO speed up: yield by time (Async.step_sometimes -> bool)
 
 --- @async
 lua_ls.feed = function(silent)
-  local files = vim.fn.globpath(".", "**/*.lua", true, true)
-  local counter = 0
-  for _, path in ipairs(files) do
-    path = vim.fn.fnamemodify(path, ":p")
-    local n = vim.fn.bufadd(path)
-    if vim.fn.bufloaded(n) == 0 then
-      vim.fn.bufload(n)
-      vim.bo[n].buflisted = false
-      counter = counter + 1
+  local buffers = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
+    :map(function(path) return vim.fn.bufadd(vim.fn.fnamemodify(path, ":p")) end)
+    :filter(function(buf) return vim.fn.bufloaded(buf) == 0 end)
+    :totable()
 
-      if counter == 1 and not silent then
-        vim.notify("Loading...")
-      end
+  if #buffers == 0 then return end
 
-      Api.step()
-    end
+  local notification = vim.notify(
+    "...", "info",
+    {title = "LuaLS fix", timeout = false}
+  )
+
+  Api.step()
+
+  for i, buf in ipairs(buffers) do
+    notification = vim.notify(
+      ("%s/%s"):format(i, #buffers), nil,
+      {replace = notification, title = "LuaLS fix", timeout = false}
+    )
+    vim.fn.bufload(buf)
+    vim.bo[buf].buflisted = false
+    Api.step()
   end
 
-  if not silent and #files > 0 then
-    vim.notify(("LuaLS fix: loaded %s files"):format(counter))
-  end
+  vim.notify(nil, nil, {replace = notification, timeout = 5000})
 end
 
 --- @async
