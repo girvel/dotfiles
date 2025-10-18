@@ -29,27 +29,27 @@ return {
       local prefix = mode == "n" and "" or "<Esc>"
       for _, keypair in ipairs {{"Left", "Right"}, {"h", "l"}} do
         local left, right = unpack(keypair)
-        Map(mode, "<C-" .. left .. ">",  prefix .. "<cmd>BufferLineCyclePrev<CR>", {})
-        Map(mode, "<C-" .. right .. ">", prefix .. "<cmd>BufferLineCycleNext<CR>", {})
+        Api.rumap(mode, "<C-" .. left .. ">",  prefix .. "<cmd>BufferLineCyclePrev<CR>", {})
+        Api.rumap(mode, "<C-" .. right .. ">", prefix .. "<cmd>BufferLineCycleNext<CR>", {})
       end
     end
 
-    Map("n", "<leader>bl", function()
+    Api.rumap("n", "<leader>bl", function()
       vim.cmd("BufferLineCloseRight")
       vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
-    Map("n", "<leader>bh", function()
+    Api.rumap("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
       vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
-    Map("n", "<leader>bo", function()
+    Api.rumap("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
       vim.schedule(function() lua_ls.feed(true) end)
     end, {})
 
-    Map("n", "<leader>bc", function()
+    Api.rumap("n", "<leader>bc", function()
       local current_buf = vim.api.nvim_get_current_buf()
       vim.bo.buflisted = false
 

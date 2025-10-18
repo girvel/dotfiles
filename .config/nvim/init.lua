@@ -1,5 +1,3 @@
--- NEXT Api.rumap
-Map = require("rumap")
 Api = require("api")
 
 require("opt").init()

@@ -23,4 +23,6 @@ api.luapath_head = function(modpath)
   return head or modpath
 end
 
+api.rumap = require("api.rumap")
+
 return api

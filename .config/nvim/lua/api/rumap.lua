@@ -87,14 +87,18 @@ local ruscmd_collisions = {
 }
 
 --- vim.keymap.set but supporting russian layout
-return function(mode, mapping, ...)
-  vim.keymap.set(mode, mapping, ...)
+--- @param mode string|string[] Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
+--- @param lhs string           Left-hand side |{lhs}| of the mapping.
+--- @param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
+--- @param opts? vim.keymap.set.Opts
+return function(mode, lhs, rhs, opts)
+  vim.keymap.set(mode, lhs, rhs, opts)
 
-  if ruscmd_collisions[mapping] then return end
+  if ruscmd_collisions[lhs] then return end
 
   local translation = ""
   local is_in_brackets = false
-  for character in mapping:gmatch(".") do
+  for character in lhs:gmatch(".") do
     if character == "<" then
       is_in_brackets = true
     elseif character == ">" then
@@ -105,5 +109,5 @@ return function(mode, mapping, ...)
     translation = translation .. character
   end
 
-  vim.keymap.set(mode, translation, ...)
+  vim.keymap.set(mode, translation, rhs, opts)
 end

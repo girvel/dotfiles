@@ -134,8 +134,8 @@ lua_ls.config = {
     is_attached = true
     vim.schedule(lua_ls.feed)
 
-    Map("n", "<leader>oo", lua_ls.feed, {})
-    Map("i", "<M-.>", lua_ls.auto_require, {})
+    Api.rumap("n", "<leader>oo", lua_ls.feed, {})
+    Api.rumap("i", "<M-.>", lua_ls.auto_require, {})
   end,
   settings = {
     Lua = {

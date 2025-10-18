@@ -34,7 +34,7 @@ return {
   },
   config = function(_, opts)
     require("neo-tree").setup(opts)
-    Map("n", "<leader>tf", ":Neotree<CR>")
+    Api.rumap("n", "<leader>tf", ":Neotree<CR>")
 
     -- removing empty buffers
     vim.api.nvim_create_autocmd('BufAdd', {
