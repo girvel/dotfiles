@@ -2,7 +2,23 @@ return {
   "nvim-treesitter/nvim-treesitter",
   config = function()
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "lua", "rust", "toml", "glsl" },
+      ensure_installed = {
+        "bash",
+        "c",
+        "glsl",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "python",
+        "rust",
+        "toml",
+        "toml",
+        "typescript",
+        "xml",
+        "yaml",
+      },
       auto_install = true,
       highlight = {
         enable = true,
