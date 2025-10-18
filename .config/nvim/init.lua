@@ -1,4 +1,5 @@
 Api = require("api")
+Ui = require("api.ui")
 
 require("opt").init()
 require("package_manager").init()

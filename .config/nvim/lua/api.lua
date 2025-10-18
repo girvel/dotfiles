@@ -79,7 +79,10 @@ api.resume = function(f)
       else
         result = {coroutine.resume(current, ...)}
       end
-      table.remove(result, 1)
+      local ok = table.remove(result, 1)
+      if not ok then
+        error(result[1], 1)
+      end
       return result
     end
 

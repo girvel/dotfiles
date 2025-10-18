@@ -2,7 +2,6 @@ local lua_ls = {}
 
 -- TODO loading animation
 -- TODO progress bar
--- TODO UI elements: input, menu, progress bar
 -- TODO lua/api: Api, Ui, Async
 -- TODO speed up: yield by time (Async.step_sometimes -> bool)
 
@@ -15,24 +14,17 @@ lua_ls.feed = function(silent)
 
   if #buffers == 0 then return end
 
-  local notification = vim.notify(
-    "...", "info",
-    {title = "LuaLS fix", timeout = false}
-  )
-
+  local bar = Ui.progress_bar("LuaLS fix", #buffers)
   Api.step()
 
   for i, buf in ipairs(buffers) do
-    notification = vim.notify(
-      ("%s/%s"):format(i, #buffers), nil,
-      {replace = notification, title = "LuaLS fix", timeout = false}
-    )
+    bar:update(i)
     vim.fn.bufload(buf)
     vim.bo[buf].buflisted = false
     Api.step()
   end
 
-  vim.notify(nil, nil, {replace = notification, timeout = 5000})
+  bar:finish()
 end
 
 --- @async
@@ -74,6 +66,7 @@ lua_ls.auto_require = function()
 
   local modpath
   if #candidates == 0 then
+    -- TODO in the future -- Ui.input
     local this_input = input({
       position = "50%",
       size = {width = 30},
@@ -105,6 +98,7 @@ lua_ls.auto_require = function()
       modpath = candidates[1].text
       vim.notify(("Required %q"):format(modpath))
     else
+    -- TODO in the future -- Ui.menu
       local this_menu = menu(
         {
           position = "50%",
