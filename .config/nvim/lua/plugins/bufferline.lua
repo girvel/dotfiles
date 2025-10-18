@@ -48,15 +48,30 @@ return {
     end, {})
 
     Map("n", "<leader>bc", function()
+      local current_buf = vim.api.nvim_get_current_buf()
+      vim.bo.buflisted = false
+
       local listed_buffers = vim.tbl_filter(function(n)
         return vim.api.nvim_buf_is_loaded(n) and vim.bo[n].buflisted
       end, vim.api.nvim_list_bufs())
 
-      vim.bo.buflisted = false
-      if #listed_buffers == 1 then
+      if #listed_buffers == 0 then
         vim.cmd("enew")
-      else
-        vim.cmd("b#")
+        return
+      end
+
+      local jumps, current_pos = unpack(vim.fn.getjumplist())
+
+      for i = current_pos, 1, -1 do
+        local buf = jumps[i].bufnr
+
+        if vim.api.nvim_buf_is_valid(buf)
+          and buf ~= current_buf
+          and vim.bo[buf].buflisted
+        then
+          vim.api.nvim_set_current_buf(buf)
+          break
+        end
       end
     end, {})
   end,
