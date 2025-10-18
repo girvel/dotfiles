@@ -59,6 +59,7 @@ lua_ls.auto_require = function(word)
   Api.feed('<Esc>')
   Async.step()
 
+  -- TODO bug normal mode in input
   local modpath
   if #candidates == 0 then
     -- TODO in the future -- Ui.input
@@ -125,7 +126,7 @@ lua_ls.auto_require = function(word)
   end
 
   insert_require(modpath)
-  Api.feed("i")
+  Api.feed("a")
   Async.step()
 end
 
@@ -159,6 +160,7 @@ lua_ls.config = {
       cmp.complete()
     end, {})
 
+    -- TODO maybe visual mode
     for _, mode in ipairs {"i", "n"} do
       Api.rumap(mode, "<M-,>", function()
         local word do
