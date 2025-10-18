@@ -36,22 +36,30 @@ api.await = function(f, ...)
   assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
 
   local result = nil
-
   local args = {}
+  local callback_arg_specified = false
+
+  local callback = function(...)
+    result = {...}
+    if coroutine.status(current) == "suspended" then
+      coroutine.resume(current)
+    end
+  end
+
   for i = 1, select("#", ...) do
     local arg = select(i, ...)
     if arg == api.callback_here then
-      arg = function(...)
-        result = {...}
-        if coroutine.status(current) == "suspended" then
-          coroutine.resume(current)
-        end
-      end
+      callback_arg_specified = true
+      arg = callback
     end
     args[i] = arg
   end
 
-  f(unpack(args))
+  if callback_arg_specified then
+    f(unpack(args))
+  else
+    f(callback, unpack(args))
+  end
 
   if result == nil then
     coroutine.yield()
@@ -61,5 +69,8 @@ api.await = function(f, ...)
 end
 
 api.callback_here = {}
+
+api.step = function() api.await(vim.schedule) end
+api.sleep = function(ms) api.await(vim.defer_fn, ms) end
 
 return api
