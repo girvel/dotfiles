@@ -204,8 +204,8 @@ snippets.init = function()
       end
 
       luasnip.add_snippets(language, {
-        snippet(start .. finish,           start .. "$1" .. finish .. "$0"),
-        snippet(start .. finish .. finish, start .. "$1" .. finish .. ",$0")
+        snippet(start .. finish,        start .. "$1" .. finish .. "$0"),
+        snippet(start .. finish .. "c", start .. "$1" .. finish .. ",$0")
       })
     end
   end
