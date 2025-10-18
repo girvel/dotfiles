@@ -3,6 +3,8 @@ return {
   event = "VeryLazy",
   opts = {
     lsp = {
+      -- I use my own solution for documentation preview
+      hover = { enabled = false },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
         ["vim.lsp.util.stylize_markdown"] = true,
