@@ -7,8 +7,15 @@ local ui = {}
 local progress_bar_methods = {}
 ui.progress_bar_mt = {__index = progress_bar_methods}
 
+local W = 35 - 2  -- TODO join with notify.min/max_width
+
 local bar_format = function(value, max)
-  return ("%s/%s"):format(value, max)
+  local n = math.floor(value / max * (W - 2))
+  local bar = "[" .. ("#"):rep(n) .. ("_"):rep(W - 2 - n) .. "]"
+  local value_length = #tostring(max)
+  local indicator = (" %s%s/%s "):format((" "):rep(value_length - #tostring(value)), value, max)
+  local indicator_start = math.floor((W - #indicator) / 2)
+  return bar:sub(1, indicator_start - 1) .. indicator .. bar:sub(indicator_start + #indicator)
 end
 
 --- @return ui_progress_bar
