@@ -1,3 +1,5 @@
+local qwerty = {}
+
 local ru_char_map = {
   ["!"] = '!',
   ["@"] = '"',
@@ -81,28 +83,12 @@ local ru_char_map = {
   ["/"] = '.',
 }
 
-local ruscmd_collisions = {
-  ZZ = true,
-  gd = true,
-}
-
---- vim.keymap.set but supporting russian layout & async functions
---- @param mode string|string[] Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
---- @param lhs string           Left-hand side |{lhs}| of the mapping.
---- @param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
---- @param opts? vim.keymap.set.Opts
-return function(mode, lhs, rhs, opts)
-  if type(rhs) == "function" then
-    rhs = Api.async(rhs)
-  end
-
-  vim.keymap.set(mode, lhs, rhs, opts)
-
-  if ruscmd_collisions[lhs] then return end
-
+--- @param source string
+--- @return string
+qwerty.translate = function(source)
   local translation = ""
   local is_in_brackets = false
-  for character in lhs:gmatch(".") do
+  for character in source:gmatch(".") do
     if character == "<" then
       is_in_brackets = true
     elseif character == ">" then
@@ -112,6 +98,7 @@ return function(mode, lhs, rhs, opts)
     end
     translation = translation .. character
   end
-
-  vim.keymap.set(mode, translation, rhs, opts)
+  return translation
 end
+
+return qwerty

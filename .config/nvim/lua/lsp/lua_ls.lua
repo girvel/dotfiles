@@ -1,7 +1,5 @@
 local lua_ls = {}
 
--- NEXT lua/api: Api, Ui, Async
-
 local SECOND = 1000000000
 
 --- @async
@@ -14,7 +12,7 @@ lua_ls.feed = function(silent)
   if #buffers == 0 then return end
 
   local bar = Ui.progress_bar("LuaLS fix", #buffers)
-  Api.step()
+  Async.step()
 
   local start_t = vim.uv.hrtime()
 
@@ -24,7 +22,7 @@ lua_ls.feed = function(silent)
     vim.bo[buf].buflisted = false
 
     if vim.uv.hrtime() - start_t >= .1 * SECOND then
-      Api.step()
+      Async.step()
       start_t = vim.uv.hrtime()
     end
   end
@@ -87,7 +85,7 @@ lua_ls.auto_require = function()
       },
     }, {
       prompt = "> ",
-      on_submit = Api.resume(),
+      on_submit = Async.resume(),
     })
 
     this_input:mount()
@@ -97,7 +95,7 @@ lua_ls.auto_require = function()
     modpath = coroutine.yield()
   else
     Api.feed('<Esc>')
-    Api.step()
+    Async.step()
 
     if #candidates == 1 then
       modpath = candidates[1].text
@@ -124,7 +122,7 @@ lua_ls.auto_require = function()
         },
         {
           lines = candidates,
-          on_submit = Api.resume(function(item)
+          on_submit = Async.resume(function(item)
             return item.text
           end),
         }
@@ -139,13 +137,13 @@ lua_ls.auto_require = function()
 
   insert_require(modpath)
   Api.feed("a")
-  Api.step()
+  Async.step()
 end
 
 local is_attached = false
 
 lua_ls.config = {
-  on_attach = Api.async(function()
+  on_attach = Async.make(function()
     if is_attached then return end
     is_attached = true
 
@@ -156,12 +154,12 @@ lua_ls.config = {
       lua_ls.auto_require()
       vim.api.nvim_put({"."}, "c", true, true)
 
-      Api.sleep(20)
+      Async.sleep(20)
       cmp.complete()
     end, {})
     Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
 
-    Api.step()
+    Async.step()
     lua_ls.feed()
   end),
   settings = {

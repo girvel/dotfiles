@@ -1,48 +1,22 @@
-local api = {}
-
---- @param sequence string
-api.feed = function(sequence)
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes(sequence, true, false, true),
-    "n", false
-  )
-end
-
---- @param file_path string
---- @return string
-api.luapath = function(file_path)
-  -- (multiple return values)
-  local result = file_path:gsub("^%./", ""):gsub("%.lua$", ""):gsub("[/\\]", ".")
-  return result
-end
-
---- @param modpath string
---- @return string
-api.luapath_head = function(modpath)
-  local head = modpath:match("%.([^%.]+)$")
-  return head or modpath
-end
-
-api.rumap = require("api.rumap")
-
-api.async = function(f)
+local async = {}
+async.make = function(f)
   return function(...)
     coroutine.resume(coroutine.create(f), ...)
   end
 end
 
-api.await = function(f, ...)
+async.await = function(f, ...)
   local result = nil
   local args = {}
   local callback_arg_i = 0
 
-  local callback = Api.resume(function(...)
+  local callback = Async.resume(function(...)
     result = {...}
   end)
 
   for i = 1, select("#", ...) do
     local arg = select(i, ...)
-    if arg == api.callback_here then
+    if arg == async.callback_here then
       callback_arg_i = i
     end
     args[i] = arg
@@ -63,12 +37,12 @@ api.await = function(f, ...)
   return unpack(result)
 end
 
-api.callback_here = {}
+async.callback_here = {}
 
-api.step = function() api.await(vim.schedule) end
-api.sleep = function(ms) api.await(vim.defer_fn, ms) end
+async.step = function() async.await(vim.schedule) end
+async.sleep = function(ms) async.await(vim.defer_fn, ms) end
 
-api.resume = function(f)
+async.resume = function(f)
   local current = coroutine.running()
   assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
   return function(...)
@@ -90,4 +64,4 @@ api.resume = function(f)
   end
 end
 
-return api
+return async

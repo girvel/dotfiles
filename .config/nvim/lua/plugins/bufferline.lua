@@ -36,19 +36,19 @@ return {
 
     Api.rumap("n", "<leader>bl", function()
       vim.cmd("BufferLineCloseRight")
-      Api.step()
+      Async.step()
       lua_ls.feed(true)
     end, {})
 
     Api.rumap("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
-      Api.step()
+      Async.step()
       lua_ls.feed(true)
     end, {})
 
     Api.rumap("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
-      Api.step()
+      Async.step()
       lua_ls.feed(true)
     end, {})
 
