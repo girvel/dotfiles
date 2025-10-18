@@ -1,9 +1,8 @@
 local lua_ls = {}
 
--- TODO loading animation
--- TODO progress bar
--- TODO lua/api: Api, Ui, Async
--- TODO speed up: yield by time (Async.step_sometimes -> bool)
+-- NEXT lua/api: Api, Ui, Async
+
+local SECOND = 1000000000
 
 --- @async
 lua_ls.feed = function(silent)
@@ -17,11 +16,17 @@ lua_ls.feed = function(silent)
   local bar = Ui.progress_bar("LuaLS fix", #buffers)
   Api.step()
 
+  local start_t = vim.uv.hrtime()
+
   for i, buf in ipairs(buffers) do
     bar:update(i)
     vim.fn.bufload(buf)
     vim.bo[buf].buflisted = false
-    Api.step()
+
+    if vim.uv.hrtime() - start_t >= .1 * SECOND then
+      Api.step()
+      start_t = vim.uv.hrtime()
+    end
   end
 
   bar:finish()
