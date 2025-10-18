@@ -47,8 +47,6 @@ return {
 
           if #buffers <= 2 then return end
 
-          vim.notify(vim.inspect(buffers))
-
           for _, buf in ipairs(buffers) do
             if vim.bo[buf].filetype == "" and vim.api.nvim_buf_get_name(buf) == "" then
               vim.api.nvim_buf_delete(buf, {force = true})

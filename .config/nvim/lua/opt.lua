@@ -28,7 +28,7 @@ opt.init = function()
   vim.g.mapleader = " "
 
   vim.cmd("filetype indent off")
-  vim.cmd(":set cc=100")
+  vim.cmd("set cc=100")
 
   vim.opt.title = true
   vim.api.nvim_create_autocmd("VimEnter", {
@@ -65,6 +65,17 @@ opt.init = function()
     underline = true,
     update_in_insert = false,
   }
+
+  local orig = vim.lsp.util.open_floating_preview
+  --- @diagnostic disable-next-line
+  vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or "rounded"
+    vim.cmd('set winhighlight=Normal:LspPreview,FloatBorder:LspPreviewBorder')
+    local result = {orig(contents, syntax, opts, ...)}
+    vim.cmd('set winhighlight=LspPreview:Normal,LspPreviewBorder:FloatBorder')
+    return unpack(result)
+  end
 end
 
 return opt

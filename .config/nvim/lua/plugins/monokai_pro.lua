@@ -1,7 +1,9 @@
+local THEME = "spectrum"
+
 return {
   "loctvl842/monokai-pro.nvim",
   opts = {
-    filter = "spectrum",
+    filter = THEME,
     background_clear = {
       "telescope",
       "notify",
@@ -9,8 +11,17 @@ return {
   },
   config = function(_, opts)
     if vim.env.TERM == "linux" then return end
+    local monokai = require("monokai-pro")
 
-    require("monokai-pro").setup(opts)
+    monokai.setup(opts)
     vim.cmd.colorscheme("monokai-pro")
+
+    local palette = require("monokai-pro.colorscheme.palette." .. THEME)
+    vim.schedule(function()
+      vim.notify(vim.inspect(palette))
+    end)
+
+    vim.api.nvim_set_hl(0, "LspPreview", { bg = palette.dark1 })
+    vim.api.nvim_set_hl(0, "LspPreviewBorder", { bg = palette.dark1, fg = palette.dimmed2 })
   end
 }
