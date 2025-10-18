@@ -1,13 +1,6 @@
--- TODO Api global object?
+-- NEXT Api.rumap
 Map = require("rumap")
-
---- @param sequence string
-Feed = function(sequence)
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes(sequence, true, false, true),
-    "n", false
-  )
-end
+Api = require("api")
 
 require("opt").init()
 require("package_manager").init()

@@ -36,8 +36,33 @@ return {
     Map("n", "<leader>oo", luals_fix.feed, {})
 
     Map("i", "<M-.>", function()
-      Feed("<Esc>")
       local menu = require("nui.menu")
+
+      local buf = vim.api.nvim_get_current_buf()
+
+      local word do
+        local line = vim.api.nvim_get_current_line()
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        word = line:sub(1, col):match("([%w%d_]+)$")
+
+        if not word then
+          vim.notify("No identifier")
+          return
+        end
+      end
+
+      local candidates do
+        candidates = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
+          :filter(function(path)
+            return vim.endswith(path, word .. ".lua")
+              or vim.endswith(path, word .. "/init.lua")
+          end)
+          :map(Api.luapath)
+          :map(menu.item)
+          :totable()
+      end
+
+      Api.feed('<Esc>')
       menu(
         {
           position = "50%",
@@ -48,7 +73,7 @@ return {
           border = {
             style = "single",
             text = {
-              top = "[Test]",
+              top = " require ",
               top_align = "center",
             },
           },
@@ -57,12 +82,13 @@ return {
           },
         },
         {
-          lines = {
-            menu.item("Hello"),
-            menu.item("world"),
-          },
+          lines = candidates,
           on_submit = function(item)
-            vim.notify("Item submitted: " .. item.text)
+            -- NEXT no menu if # == 0, but notify
+            vim.api.nvim_buf_set_lines(
+              buf, 0, 0, false,
+              {('local %s = require("%s")'):format(Api.luapath_head(item.text), item.text)}
+            )
           end,
         }
       ):mount()
