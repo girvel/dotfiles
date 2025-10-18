@@ -32,7 +32,41 @@ return {
       }
     }
 
+    -- TODO use this mappings on LSP attach?
     Map("n", "<leader>oo", luals_fix.feed, {})
+
+    Map("i", "<M-.>", function()
+      Feed("<Esc>")
+      local menu = require("nui.menu")
+      menu(
+        {
+          position = "50%",
+          size = {
+            width = 25,
+            height = 7,
+          },
+          border = {
+            style = "single",
+            text = {
+              top = "[Test]",
+              top_align = "center",
+            },
+          },
+          win_options = {
+            winhighlight = "Normal:Normal,FloatBorder:Normal",
+          },
+        },
+        {
+          lines = {
+            menu.item("Hello"),
+            menu.item("world"),
+          },
+          on_submit = function(item)
+            vim.notify("Item submitted: " .. item.text)
+          end,
+        }
+      ):mount()
+    end, {})
 
     vim.lsp.config.clangd = {}
 
