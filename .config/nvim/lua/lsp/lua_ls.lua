@@ -31,23 +31,12 @@ lua_ls.feed = function(silent)
 end
 
 --- @async
-lua_ls.auto_require = function()
+lua_ls.auto_require = function(word)
   local menu = require("nui.menu")
   local input = require("nui.input")
   local event = require("nui.utils.autocmd").event
 
   local buf = vim.api.nvim_get_current_buf()
-
-  local word do
-    local line = vim.api.nvim_get_current_line()
-    local col = vim.api.nvim_win_get_cursor(0)[2]
-    word = line:sub(1, col):match("([%w%d_]+)$")
-
-    if not word then
-      vim.notify("No identifier")
-      return
-    end
-  end
 
   local candidates do
     candidates = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
@@ -66,6 +55,9 @@ lua_ls.auto_require = function()
       {('local %s = require("%s")'):format(word, modpath)}
     )
   end
+
+  Api.feed('<Esc>')
+  Async.step()
 
   local modpath
   if #candidates == 0 then
@@ -94,9 +86,6 @@ lua_ls.auto_require = function()
     end)
     modpath = coroutine.yield()
   else
-    Api.feed('<Esc>')
-    Async.step()
-
     if #candidates == 1 then
       modpath = candidates[1].text
       vim.notify(("Required %q"):format(modpath))
@@ -136,7 +125,7 @@ lua_ls.auto_require = function()
   end
 
   insert_require(modpath)
-  Api.feed("a")
+  Api.feed("i")
   Async.step()
 end
 
@@ -148,16 +137,43 @@ lua_ls.config = {
     is_attached = true
 
     Api.rumap("n", "<leader>oo", lua_ls.feed, {})
+
     Api.rumap("i", "<M-.>", function()
       local cmp = require("cmp")
 
-      lua_ls.auto_require()
+      local word do
+        local line = vim.api.nvim_get_current_line()
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        word = line:sub(1, col):match("([%w%d_]*)$")
+
+        if not word then
+          vim.notify("No identifier")
+          return
+        end
+      end
+
+      lua_ls.auto_require(word)
       vim.api.nvim_put({"."}, "c", true, true)
 
       Async.sleep(20)
       cmp.complete()
     end, {})
-    Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
+
+    Api.rumap("i", "<M-,>", function()
+      local word do
+        local line = vim.api.nvim_get_current_line()
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        word = line:sub(1, col):match("([%w%d_]*)$")
+          .. line:sub(col + 1):match("^([%w%d_]*)")
+
+        if not word then
+          vim.notify("No identifier")
+          return
+        end
+      end
+
+      lua_ls.auto_require(word)
+    end, {})
 
     Async.step()
     lua_ls.feed()
