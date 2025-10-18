@@ -14,10 +14,6 @@ return {
         },
 
         mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<M-Up>"] = cmp.mapping.select_prev_item(),
-          ["<M-Down>"] = cmp.mapping.select_next_item(),
           ["<C-S-f>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
@@ -26,6 +22,15 @@ return {
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,
           }),
+          ["<M-Up>"] = cmp.mapping.select_prev_item(),
+          ["<M-Down>"] = cmp.mapping.select_next_item(),
+          ["<M-CR>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end)
         },
 
         sources = {
