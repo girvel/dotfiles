@@ -1,5 +1,8 @@
 local lua_ls = {}
 
+-- TODO loading animation
+
+--- @async
 lua_ls.feed = function(silent)
   local files = vim.fn.globpath(".", "**/*.lua", true, true)
   local counter = 0
@@ -10,6 +13,12 @@ lua_ls.feed = function(silent)
       vim.fn.bufload(n)
       vim.bo[n].buflisted = false
       counter = counter + 1
+
+      if counter == 1 and not silent then
+        vim.notify("Loading...")
+      end
+
+      Api.step()
     end
   end
 
@@ -129,13 +138,12 @@ end
 local is_attached = false
 
 lua_ls.config = {
-  on_attach = function()
+  on_attach = Api.async(function()
     if is_attached then return end
     is_attached = true
-    vim.schedule(lua_ls.feed)
 
     Api.rumap("n", "<leader>oo", lua_ls.feed, {})
-    Api.rumap("i", "<M-.>", Api.async(function()
+    Api.rumap("i", "<M-.>", function()
       local cmp = require("cmp")
 
       lua_ls.auto_require()
@@ -143,9 +151,12 @@ lua_ls.config = {
 
       Api.sleep(20)
       cmp.complete()
-    end), {})
-    Api.rumap("i", "<M-,>", Api.async(lua_ls.auto_require), {})
-  end,
+    end, {})
+    Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
+
+    Api.step()
+    lua_ls.feed()
+  end),
   settings = {
     Lua = {
       runtime = {
