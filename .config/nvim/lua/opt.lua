@@ -66,15 +66,40 @@ opt.init = function()
     update_in_insert = false,
   }
 
-  local orig = vim.lsp.util.open_floating_preview
-  --- @diagnostic disable-next-line
-  vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or "rounded"
-    vim.cmd('set winhighlight=Normal:LspPreview,FloatBorder:LspPreviewBorder')
-    local result = {orig(contents, syntax, opts, ...)}
-    vim.cmd('set winhighlight=LspPreview:Normal,LspPreviewBorder:FloatBorder')
-    return unpack(result)
+  -- Dealing with "K" documentation popup
+  do
+    local preview_win
+
+    local close_popup = function()
+      if preview_win and vim.api.nvim_win_is_valid(preview_win) then
+        vim.api.nvim_win_close(preview_win, true)
+        preview_win = nil
+      end
+    end
+
+    -- Fancy rounded borders w/ correct colors for documentation popup
+    local orig = vim.lsp.util.open_floating_preview
+    --- @diagnostic disable-next-line
+    vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+      opts = opts or {}
+      opts.border = opts.border or "rounded"
+
+      vim.cmd('set winhighlight=Normal:LspPreview,FloatBorder:LspPreviewBorder')
+      local buf, win = orig(contents, syntax, opts, ...)
+      vim.cmd('set winhighlight=LspPreview:Normal,LspPreviewBorder:FloatBorder')
+
+      if win then
+        preview_win = win
+      end
+
+      return buf, win
+    end
+
+    -- Fixing popup staying open when navigating (history, telescope, tabs)
+    vim.api.nvim_create_autocmd("BufLeave", {
+      pattern = "*",
+      callback = close_popup,
+    })
   end
 end
 
