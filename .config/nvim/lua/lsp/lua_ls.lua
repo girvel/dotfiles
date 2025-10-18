@@ -18,7 +18,12 @@ lua_ls.feed = function(silent)
   end
 end
 
-lua_ls.auto_require = function()
+lua_ls.auto_require = function(on_complete)
+  local complete = function()
+    if not on_complete then return end
+    vim.schedule(on_complete)
+  end
+
   local menu = require("nui.menu")
   local input = require("nui.input")
   local event = require("nui.utils.autocmd").event
@@ -73,6 +78,7 @@ lua_ls.auto_require = function()
       on_submit = function(value)
         insert_require(value)
         Api.feed("a")
+        complete()
       end,
     })
 
@@ -91,6 +97,7 @@ lua_ls.auto_require = function()
       insert_require(modpath)
       vim.notify(("Required %q"):format(modpath))
       Api.feed("a")
+      complete()
     end)
     return end
 
@@ -117,6 +124,7 @@ lua_ls.auto_require = function()
       on_submit = function(item)
         insert_require(item.text)
         Api.feed("a")
+        complete()
       end,
     }
   )
@@ -135,7 +143,16 @@ lua_ls.config = {
     vim.schedule(lua_ls.feed)
 
     Api.rumap("n", "<leader>oo", lua_ls.feed, {})
-    Api.rumap("i", "<M-.>", lua_ls.auto_require, {})
+    Api.rumap("i", "<M-.>", function()
+      lua_ls.auto_require(function()
+        local cmp = require("cmp")
+        vim.api.nvim_put({"."}, "c", true, true)
+        vim.defer_fn(function()
+          cmp.complete()
+        end, 20)
+      end)
+    end, {})
+    Api.rumap("i", "<M-,>", lua_ls.auto_require, {})
   end,
   settings = {
     Lua = {
