@@ -30,15 +30,23 @@ return {
             else
               fallback()
             end
-          end)
+          end),
         },
 
         sources = {
-          { name = "path" },
-          { name = "nvim_lsp", keyword_length = 3 },
+          {
+            name = "path",
+            option = {
+              get_cwd = function()
+                -- ignores arguments
+                return vim.fn.getcwd()
+              end,
+            },
+          },
+          { name = "nvim_lsp", keyword_length = 1 },
           { name = "nvim_lsp_signature_help" },
-          { name = "nvim_lua", keyword_length = 2 },
-          { name = "buffer", keyword_length = 2 },
+          { name = "nvim_lua", keyword_length = 1 },
+          { name = "buffer", keyword_length = 1 },
           { name = "luasnip" },
           { name = "calc" },
         },
