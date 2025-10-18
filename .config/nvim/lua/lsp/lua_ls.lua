@@ -159,21 +159,26 @@ lua_ls.config = {
       cmp.complete()
     end, {})
 
-    Api.rumap("i", "<M-,>", function()
-      local word do
-        local line = vim.api.nvim_get_current_line()
-        local col = vim.api.nvim_win_get_cursor(0)[2]
-        word = line:sub(1, col):match("([%w%d_]*)$")
-          .. line:sub(col + 1):match("^([%w%d_]*)")
+    for _, mode in ipairs {"i", "n"} do
+      Api.rumap(mode, "<M-,>", function()
+        local word do
+          local line = vim.api.nvim_get_current_line()
+          local col = vim.api.nvim_win_get_cursor(0)[2]
+          word = line:sub(1, col):match("([%w%d_]*)$")
+            .. line:sub(col + 1):match("^([%w%d_]*)")
 
-        if not word then
-          vim.notify("No identifier")
-          return
+          if not word then
+            vim.notify("No identifier")
+            return
+          end
         end
-      end
 
-      lua_ls.auto_require(word)
-    end, {})
+        lua_ls.auto_require(word)
+        if mode == "n" then
+          Api.feed("<Esc>")
+        end
+      end, {})
+    end
 
     Async.step()
     lua_ls.feed()
