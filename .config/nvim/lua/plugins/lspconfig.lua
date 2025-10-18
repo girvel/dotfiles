@@ -32,11 +32,13 @@ return {
       }
     }
 
-    -- TODO use this mappings on LSP attach?
+    -- NEXT use this mappings on LSP attach?
     Map("n", "<leader>oo", luals_fix.feed, {})
 
     Map("i", "<M-.>", function()
       local menu = require("nui.menu")
+      local input = require("nui.input")
+      local event = require("nui.utils.autocmd").event
 
       local buf = vim.api.nvim_get_current_buf()
 
@@ -62,12 +64,6 @@ return {
           :totable()
       end
 
-      if #candidates == 0 then
-        -- NEXT use word distance & stuff to suggest nearest
-        vim.notify(('%q module not found'):format(word))
-        return
-      end
-
       local insert_require = function(modpath)
         vim.api.nvim_buf_set_lines(
           buf, 0, 0, false,
@@ -75,18 +71,47 @@ return {
         )
       end
 
-      -- NEXT insert the .
+      if #candidates == 0 then
+        local this_input = input({
+          position = "50%",
+          size = {width = 30},
+          border = {
+            style = "single",
+            text = {
+              top = " enter modpath ",
+              top_align = "center",
+            },
+          },
+          win_options = {
+            winhighlight = "Normal:Normal,FloatBorder:Normal",
+          },
+        }, {
+          prompt = "> ",
+          on_submit = function(value)
+            insert_require(value)
+            Api.feed("a")
+          end,
+        })
 
-      -- NEXT undo only the insert, not the insert + typing before
-      if #candidates == 1 then
-        local modpath = candidates[1].text
-        insert_require(modpath)
-        vim.notify(("Required %q"):format(modpath))
+        this_input:mount()
+        this_input:on(event.BufLeave, function()
+          this_input:unmount()
+        end)
         return
       end
 
       Api.feed('<Esc>')
-      menu(
+
+      if #candidates == 1 then
+        vim.schedule(function()
+          local modpath = candidates[1].text
+          insert_require(modpath)
+          vim.notify(("Required %q"):format(modpath))
+          Api.feed("a")
+        end)
+        return end
+
+      local this_menu = menu(
         {
           position = "50%",
           size = {
@@ -111,7 +136,11 @@ return {
             Api.feed("a")
           end,
         }
-      ):mount()
+      )
+      this_menu:mount()
+      this_menu:on(event.BufLeave, function()
+        this_menu:unmount()
+      end)
     end, {})
 
     vim.lsp.config.clangd = {}
