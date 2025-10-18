@@ -31,36 +31,30 @@ api.async = function(f)
   end
 end
 
--- NEXT use resume
 api.await = function(f, ...)
-  local current = coroutine.running()
-  assert(current ~= nil, "api.await should be called from the coroutine; see Api.async")
-
   local result = nil
   local args = {}
-  local callback_arg_specified = false
+  local callback_arg_i = 0
 
-  local callback = function(...)
+  local callback = Api.resume(function(...)
     result = {...}
-    if coroutine.status(current) == "suspended" then
-      coroutine.resume(current)
-    end
-  end
+  end)
 
   for i = 1, select("#", ...) do
     local arg = select(i, ...)
     if arg == api.callback_here then
-      callback_arg_specified = true
-      arg = callback
+      callback_arg_i = i
     end
     args[i] = arg
   end
 
-  if callback_arg_specified then
-    f(unpack(args))
+  if callback_arg_i == 0 then
+    table.insert(args, 1, callback)
   else
-    f(callback, unpack(args))
+    args[callback_arg_i] = callback
   end
+
+  f(unpack(args))
 
   if result == nil then
     coroutine.yield()
