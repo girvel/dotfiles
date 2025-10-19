@@ -226,6 +226,7 @@ lua_ls.config = {
       },
       diagnostics = {
         globals = {"vim", "love"},
+        unusedLocalExclude = {"_*"},
         -- disable = {"unused-local"},
       },
       workspace = {
