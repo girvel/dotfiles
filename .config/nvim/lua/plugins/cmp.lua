@@ -16,10 +16,10 @@ return {
         mapping = {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<C-Up>"] = cmp.mapping.select_prev_item(),
-          ["<C-Down>"] = cmp.mapping.select_next_item(),
-          ["<C-S-Up>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-S-Down>"] = cmp.mapping.scroll_docs(4),
+          ["<C-j>"] = cmp.mapping.select_next_item(),
+          ["<C-k>"] = cmp.mapping.select_prev_item(),
+          ["<C-S-j>"] = cmp.mapping.scroll_docs(4),
+          ["<C-S-k>"] = cmp.mapping.scroll_docs(-4),
           ["<Tab>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,

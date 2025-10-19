@@ -102,7 +102,6 @@ lua_ls.parse_last_log = function()
           table.insert(stack.items, {
             text = function_name and (function_name .. "()") or "",
             lnum = row,
-            col = 1,
             bufnr = vim.fn.bufadd(path)
           })
         end
@@ -124,7 +123,81 @@ lua_ls.parse_last_log = function()
     .items
 
   vim.fn.setqflist(stack)
-  vim.cmd("copen")
+  vim.cmd("copen | wincmd L | vertical resize 40 | file STACK")
+  Async.step()
+
+  Api.feed("<C-w>h")
+end
+
+local init_mappings = function()
+  Api.rumap("n", "<leader>oo", lua_ls.feed, {})
+
+  Api.rumap("i", "<M-.>", function()
+    local cmp = require("cmp")
+
+    local word do
+      local line = vim.api.nvim_get_current_line()
+      local col = vim.api.nvim_win_get_cursor(0)[2]
+      word = line:sub(1, col):match("([%w%d_]*)$")
+
+      if not word then
+        vim.notify("No identifier")
+        return
+      end
+    end
+
+    lua_ls.auto_require(word)
+    vim.api.nvim_put({"."}, "c", true, true)
+
+    Async.sleep(20)
+    cmp.complete()
+  end, {})
+
+  -- TODO maybe visual mode
+  for _, mode in ipairs {"i", "n"} do
+    Api.rumap(mode, "<M-,>", function()
+      local word do
+        local line = vim.api.nvim_get_current_line()
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        word = line:sub(1, col):match("([%w%d_]*)$")
+          .. line:sub(col + 1):match("^([%w%d_]*)")
+
+        if not word then
+          vim.notify("No identifier")
+          return
+        end
+      end
+
+      lua_ls.auto_require(word)
+      if mode == "n" then
+        Api.feed("<Esc>")
+      end
+    end, {})
+  end
+
+  -- TODO Api.rumap supporting multiple modes
+  Api.rumap("n", "<C-e>", lua_ls.parse_last_log, {})
+  Api.rumap("n", "<C-S-e>", ":cclose<CR>", {})
+
+  for _, tuple in ipairs {
+    {"j", "cnext"},
+    {"k", "cprevious"},
+  } do
+    local key, cmd = unpack(tuple)
+    Api.rumap("n", "<M-" .. key .. ">", function()
+      local listed_bufs = vim.tbl_filter(
+        function(b) return vim.api.nvim_buf_is_loaded(b) and vim.bo[b].buflisted end,
+        vim.api.nvim_list_bufs()
+      )
+      vim.cmd(cmd)
+
+      Async.step()
+      local buf = vim.api.nvim_get_current_buf()
+      if not vim.tbl_contains(listed_bufs, buf) then
+        vim.bo[buf].buflisted = false
+      end
+    end, {})
+  end
 end
 
 local is_attached = false
@@ -134,53 +207,7 @@ lua_ls.config = {
     if is_attached then return end
     is_attached = true
 
-    Api.rumap("n", "<leader>oo", lua_ls.feed, {})
-
-    Api.rumap("i", "<M-.>", function()
-      local cmp = require("cmp")
-
-      local word do
-        local line = vim.api.nvim_get_current_line()
-        local col = vim.api.nvim_win_get_cursor(0)[2]
-        word = line:sub(1, col):match("([%w%d_]*)$")
-
-        if not word then
-          vim.notify("No identifier")
-          return
-        end
-      end
-
-      lua_ls.auto_require(word)
-      vim.api.nvim_put({"."}, "c", true, true)
-
-      Async.sleep(20)
-      cmp.complete()
-    end, {})
-
-    -- TODO maybe visual mode
-    for _, mode in ipairs {"i", "n"} do
-      Api.rumap(mode, "<M-,>", function()
-        local word do
-          local line = vim.api.nvim_get_current_line()
-          local col = vim.api.nvim_win_get_cursor(0)[2]
-          word = line:sub(1, col):match("([%w%d_]*)$")
-            .. line:sub(col + 1):match("^([%w%d_]*)")
-
-          if not word then
-            vim.notify("No identifier")
-            return
-          end
-        end
-
-        lua_ls.auto_require(word)
-        if mode == "n" then
-          Api.feed("<Esc>")
-        end
-      end, {})
-    end
-
-    -- TODO Api.rumap supporting multiple modes
-    Api.rumap("n", "<C-e>", lua_ls.parse_last_log, {})
+    init_mappings()
 
     Async.step()
     lua_ls.feed()
