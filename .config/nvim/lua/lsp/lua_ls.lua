@@ -112,15 +112,22 @@ lua_ls.parse_last_log = function()
     ::continue::
   end
 
-  local stack_name = Ui.menu(
-    "errors",
-    vim.tbl_map(function(s) return s.message end, stacks),
-    {width = 80}
-  )
+  local stack
+  if #stacks == 1 then
+    stack = stacks[1].items
+  else
+    local stack_name = #stacks == 1
+      and stacks[1]
+      or Ui.menu(
+        "errors",
+        vim.tbl_map(function(s) return s.message end, stacks),
+        {width = 80}
+      )
 
-  local stack = vim.iter(stacks)
-    :find(function(s) return s.message == stack_name end)
-    .items
+    stack = vim.iter(stacks)
+      :find(function(s) return s.message == stack_name end)
+      .items
+  end
 
   vim.fn.setqflist(stack)
   vim.cmd("copen | wincmd L | vertical resize 40 | file STACK")
