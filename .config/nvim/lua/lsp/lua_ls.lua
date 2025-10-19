@@ -32,9 +32,6 @@ end
 
 --- @async
 lua_ls.auto_require = function(word)
-  local input = require("nui.input")
-  local event = require("nui.utils.autocmd").event
-
   local buf = vim.api.nvim_get_current_buf()
 
   local candidates do
