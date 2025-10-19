@@ -60,7 +60,7 @@ lua_ls.auto_require = function(word)
     modpath = Ui.input("enter modpath")
   else
     if #candidates == 1 then
-      modpath = candidates[1].text
+      modpath = candidates[1]
       vim.notify(("Required %q"):format(modpath))
     else
       modpath = Ui.menu("choose modpath", candidates)
