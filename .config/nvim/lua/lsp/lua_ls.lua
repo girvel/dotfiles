@@ -60,37 +60,13 @@ lua_ls.auto_require = function(word)
   -- TODO bug normal mode in input
   local modpath
   if #candidates == 0 then
-    -- TODO in the future -- Ui.input
-    local this_input = input({
-      position = "50%",
-      size = {width = 30},
-      border = {
-        style = "single",
-        text = {
-          top = " enter modpath ",
-          top_align = "center",
-        },
-      },
-      win_options = {
-        winhighlight = "Normal:Normal,FloatBorder:Normal",
-      },
-    }, {
-      prompt = "> ",
-      on_submit = Async.resume(),
-    })
-
-    this_input:mount()
-    this_input:on(event.BufLeave, function()
-      this_input:unmount()
-    end)
-    modpath = coroutine.yield()
+    modpath = Ui.input("enter modpath")
   else
     if #candidates == 1 then
       modpath = candidates[1].text
       vim.notify(("Required %q"):format(modpath))
     else
-    -- TODO in the future -- Ui.menu
-      modpath = Ui.menu("require", candidates)
+      modpath = Ui.menu("choose modpath", candidates)
     end
   end
 
@@ -107,7 +83,6 @@ lua_ls.parse_last_log = function()
   end
 
   local lines = vim.fn.readfile(filepath)  --[=[@as string[]]=]
-  -- TODO choice of stacks
   local stacks = {}
   for i = #lines, 1, -1 do
     local line = lines[i]

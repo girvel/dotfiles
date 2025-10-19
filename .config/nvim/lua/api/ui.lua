@@ -45,7 +45,14 @@ progress_bar_methods.finish = function(self)
   )
 end
 
+--- @class ui_menu_opts
+--- @field width? integer
+--- @field height? integer
+
 --- @async
+--- @param title string
+--- @param items string[]
+--- @param opts? ui_menu_opts
 ui.menu = function(title, items, opts)
   local menu = require("nui.menu")
   local event = require("nui.utils.autocmd").event
@@ -82,6 +89,43 @@ ui.menu = function(title, items, opts)
     this_menu:unmount()
   end)
 
+  return coroutine.yield()
+end
+
+--- @class ui_input_opts
+--- @field width? integer
+
+--- @async
+--- @param title string
+--- @param opts? ui_input_opts
+ui.input = function(title, opts)
+  local input = require("nui.input")
+  local event = require("nui.utils.autocmd").event
+
+  opts = opts or {}
+
+  local this_input = input({
+    position = "50%",
+    size = {width = opts.width or 30},
+    border = {
+      style = "single",
+      text = {
+        top = " " .. title .. " ",
+        top_align = "center",
+      },
+    },
+    win_options = {
+      winhighlight = "Normal:Normal,FloatBorder:Normal",
+    },
+  }, {
+    prompt = "> ",
+    on_submit = Async.resume(),
+  })
+
+  this_input:mount()
+  this_input:on(event.BufLeave, function()
+    this_input:unmount()
+  end)
   return coroutine.yield()
 end
 
