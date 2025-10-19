@@ -32,7 +32,6 @@ end
 
 --- @async
 lua_ls.auto_require = function(word)
-  local menu = require("nui.menu")
   local input = require("nui.input")
   local event = require("nui.utils.autocmd").event
 
@@ -45,7 +44,6 @@ lua_ls.auto_require = function(word)
           or vim.endswith(path, word .. "/init.lua")
       end)
       :map(Api.luapath)
-      :map(menu.item)
       :totable()
   end
 
@@ -92,42 +90,69 @@ lua_ls.auto_require = function(word)
       vim.notify(("Required %q"):format(modpath))
     else
     -- TODO in the future -- Ui.menu
-      local this_menu = menu(
-        {
-          position = "50%",
-          size = {
-            width = 25,
-            height = 7,
-          },
-          border = {
-            style = "single",
-            text = {
-              top = " require ",
-              top_align = "center",
-            },
-          },
-          win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:Normal",
-          },
-        },
-        {
-          lines = candidates,
-          on_submit = Async.resume(function(item)
-            return item.text
-          end),
-        }
-      )
-      this_menu:mount()
-      this_menu:on(event.BufLeave, function()
-        this_menu:unmount()
-      end)
-      modpath = coroutine.yield()
+      modpath = Ui.menu("require", candidates)
     end
   end
 
   insert_require(modpath)
   Api.feed("a")
   Async.step()
+end
+
+lua_ls.parse_last_log = function()
+  local filepath do
+    local logs = vim.fn.globpath("~/.local/share/love/dot/logs", "*.txt", true, true)
+    table.sort(logs)
+    filepath = logs[#logs]
+  end
+
+  local lines = vim.fn.readfile(filepath)  --[=[@as string[]]=]
+  -- TODO choice of stacks
+  local stacks = {}
+  for i = #lines, 1, -1 do
+    local line = lines[i]
+    local level, frame, message = line:match("^%[([A-Z]+)%s+%S+%s+(%d+)%]%s+(.*)")
+    if level ~= "FATAL" and level ~= "ERROR" and level ~= "WARN" then
+      goto continue
+    end
+
+    local stack = {items = {}, message = ("%s %s %s"):format(level, frame, message)}
+    stack.items = {}
+    for j = i + 1, #lines do
+      local stack_line = lines[j]
+      if j > i and stack_line:sub(1, 1) == "[" then break end
+      if stack_line:find("stack traceback", 1, true) then
+        table.insert(stack.items, {text = stack_line})
+      else
+        local path, row = stack_line:match("^%s+(%S+%.lua):(%d+)")
+        if path then
+          local function_name = stack_line:match("in function '([^']*)'")
+          table.insert(stack.items, {
+            text = function_name and (function_name .. "()") or "",
+            lnum = row,
+            col = 1,
+            bufnr = vim.fn.bufadd(path)
+          })
+        end
+      end
+    end
+    table.insert(stacks, stack)
+
+    ::continue::
+  end
+
+  local stack_name = Ui.menu(
+    "errors",
+    vim.tbl_map(function(s) return s.message end, stacks),
+    {width = 80}
+  )
+
+  local stack = vim.iter(stacks)
+    :find(function(s) return s.message == stack_name end)
+    .items
+
+  vim.fn.setqflist(stack)
+  vim.cmd("copen")
 end
 
 local is_attached = false
@@ -181,6 +206,9 @@ lua_ls.config = {
         end
       end, {})
     end
+
+    -- TODO Api.rumap supporting multiple modes
+    Api.rumap("n", "<C-e>", lua_ls.parse_last_log, {})
 
     Async.step()
     lua_ls.feed()

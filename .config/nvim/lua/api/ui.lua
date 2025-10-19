@@ -45,4 +45,44 @@ progress_bar_methods.finish = function(self)
   )
 end
 
+--- @async
+ui.menu = function(title, items, opts)
+  local menu = require("nui.menu")
+  local event = require("nui.utils.autocmd").event
+
+  opts = opts or {}
+
+  local this_menu = menu(
+    {
+      position = "50%",
+      size = {
+        width = opts.width or 25,
+        height = opts.height or 7,
+      },
+      border = {
+        style = "single",
+        text = {
+          top = " " .. title .. " ",
+          top_align = "center",
+        },
+      },
+      win_options = {
+        winhighlight = "Normal:Normal,FloatBorder:Normal",
+      },
+    },
+    {
+      lines = vim.tbl_map(menu.item, items),
+      on_submit = Async.resume(function(item)
+        return item.text
+      end),
+    }
+  )
+  this_menu:mount()
+  this_menu:on(event.BufLeave, function()
+    this_menu:unmount()
+  end)
+
+  return coroutine.yield()
+end
+
 return ui
