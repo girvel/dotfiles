@@ -1,3 +1,6 @@
+local core = require("core.init")
+
+
 return {
   "rcarriga/nvim-notify",
   config = function()
@@ -11,8 +14,8 @@ return {
 
     notify.setup {
       render = "wrapped-compact",
-      minimum_width = 35,
-      max_width = 35,
+      minimum_width = core.layout.notification.w,
+      max_width = core.layout.notification.w,
     }
   end,
 }

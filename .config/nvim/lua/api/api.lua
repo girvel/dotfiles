@@ -1,4 +1,4 @@
-local qwerty = require("core.qwerty")
+local qwerty = require("lib.qwerty")
 
 
 local api = {}

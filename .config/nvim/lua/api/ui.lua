@@ -1,3 +1,6 @@
+local core = require("core.init")
+
+
 local ui = {}
 
 --- @class ui_progress_bar
@@ -7,15 +10,22 @@ local ui = {}
 local progress_bar_methods = {}
 ui.progress_bar_mt = {__index = progress_bar_methods}
 
-local W = 35 - 2  -- TODO join with notify.min/max_width
+local BAR_W = core.layout.notification.w - 2
 
 local bar_format = function(value, max)
-  local n = math.floor(value / max * (W - 2))
-  local bar = "[" .. ("#"):rep(n) .. ("_"):rep(W - 2 - n) .. "]"
-  local value_length = #tostring(max)
-  local indicator = (" %s%s/%s "):format((" "):rep(value_length - #tostring(value)), value, max)
-  local indicator_start = math.floor((W - #indicator) / 2)
-  return bar:sub(1, indicator_start - 1) .. indicator .. bar:sub(indicator_start + #indicator)
+  local bar do
+    local w = BAR_W - 2
+    local n = math.floor(value / max * w)
+    bar = "[" .. ("#"):rep(n) .. ("_"):rep(w - n) .. "]"
+  end
+
+  local indicator do
+    local value_length = #tostring(max)
+    indicator = (" %s%s/%s "):format((" "):rep(value_length - #tostring(value)), value, max)
+  end
+
+  local overlap_i = math.floor((BAR_W - #indicator) / 2)
+  return bar:sub(1, overlap_i - 1) .. indicator .. bar:sub(overlap_i + #indicator)
 end
 
 --- @return ui_progress_bar
