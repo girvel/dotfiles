@@ -10,7 +10,7 @@ snippets.init = function()
     snippet(
       "sc",
       [[
-        --- @type scene|table
+        --- @type scene
         $1 = {
           start_predicate = function(self, dt)
             return $2
@@ -25,7 +25,7 @@ snippets.init = function()
     snippet(
       "scc",
       [[
-        --- @type scene|table
+        --- @type scene
         $1 = {
           characters = {
             $2

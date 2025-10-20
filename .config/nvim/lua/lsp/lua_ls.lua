@@ -11,13 +11,13 @@ lua_ls.feed = function(silent)
 
   if #buffers == 0 then return end
 
-  local bar = Ui.progress_bar("LuaLS fix", #buffers)
+  local bar = not silent and Ui.progress_bar("LuaLS fix", #buffers)  --[[@as ui_progress_bar?]]
   Async.step()
 
   local start_t = vim.uv.hrtime()
 
   for i, buf in ipairs(buffers) do
-    bar:update(i)
+    if bar then bar:update(i) end
     vim.fn.bufload(buf)
     vim.bo[buf].buflisted = false
 
@@ -27,7 +27,7 @@ lua_ls.feed = function(silent)
     end
   end
 
-  bar:finish()
+  if bar then bar:finish() end
 end
 
 --- @async
