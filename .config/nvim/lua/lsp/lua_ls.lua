@@ -1,5 +1,33 @@
 local lua_ls = {}
 
+local is_wrapped = false
+
+--- Fixes the annoying unused-local hints for function parameters
+lua_ls.wrap_diagnostics = function()
+  if is_wrapped then return end
+  is_wrapped = true
+
+  --- @param diagnostic vim.Diagnostic
+  local exclude_bullshit = function(diagnostic, bufnr)
+    if diagnostic.code ~= "unused-local" or diagnostic.source ~= "Lua Diagnostics." then return true end
+
+    local line = vim.api.nvim_buf_get_lines(bufnr, diagnostic.lnum, diagnostic.lnum + 1, false)[1]
+    if not line then return true end
+
+    return not line:find("function")
+  end
+
+  local original = vim.diagnostic.set
+  --- @diagnostic disable-next-line: duplicate-set-field
+  vim.diagnostic.set = function(namespace, bufnr, diagnostics, opts)
+    local filtered = vim.iter(diagnostics)
+      :filter(function(d) return exclude_bullshit(d, bufnr) end)
+      :totable()
+
+    return original(namespace, bufnr, filtered, opts)
+  end
+end
+
 local SECOND = 1000000000
 
 --- @async
