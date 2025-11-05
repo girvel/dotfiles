@@ -16,16 +16,36 @@ return {
 
     local builtin = require("telescope.builtin")
 
-    Api.rumap("n", "<leader>ff", builtin.find_files, {})
-    Api.rumap("n", "<leader>fo", builtin.oldfiles, {})
-    Api.rumap("n", "<leader>fg", builtin.live_grep, {})
+    local keep = function(picker_f)
+      return function()
+        local default_text = ""
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == "TelescopePrompt" then
+            default_text = table.concat(vim.api.nvim_buf_get_lines(
+              buf, 0, -1, false
+            ), "")
+            assert(vim.startswith(default_text, "> "))
+            default_text = default_text:sub(3)
+            break
+          end
+        end
+
+        picker_f({default_text = default_text})
+      end
+    end
+
+    Api.rumap("n", "<leader>ff", keep(builtin.find_files), {})
+    Api.rumap("n", "<leader>fo", keep(builtin.oldfiles), {})
+    Api.rumap("n", "<leader>fg", keep(builtin.live_grep), {})
+    Api.rumap("n", "<leader>fh", keep(builtin.help_tags), {})
     Api.rumap("v", "<leader>fg", '"zy:Telescope live_grep default_text=<C-r>z<cr>', {})
     Api.rumap("n", "<leader>fr", builtin.resume, {})
     Api.rumap("n", "<leader>fn", ":Telescope notify<CR>", {})
     Api.rumap('n', '<leader>fu', builtin.lsp_references, {})
     Api.rumap("n", "<leader>fd", '"zyiw:Telescope live_grep default_text=<C-r>z<cr> =', {})
     Api.rumap("n", "gd", builtin.lsp_definitions, {})
-    Api.rumap("n", "<leader>fh", builtin.help_tags, {})
     -- Api.rumap("n", "<leader>ft", builtin.treesitter, {})
     -- Api.rumap("n", "<leader>fb", builtin.buffers, {})
     Api.rumap("v", "<leader>rr", '"zy:%s/<C-r>z/<C-r>z')
