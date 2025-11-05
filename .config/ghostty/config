@@ -2,5 +2,6 @@ keybind = alt+left=previous_tab
 keybind = alt+right=next_tab
 keybind = ctrl+shift+o=unbind
 keybind = ctrl+shift+e=unbind
+keybind = f11=toggle_fullscreen
 gtk-titlebar-style = tabs
 gtk-wide-tabs = false

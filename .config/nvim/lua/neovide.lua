@@ -9,7 +9,7 @@ neovide.init = function()
   vim.g.neovide_scroll_animation_far_lines = 0
   vim.g.neovide_scroll_animation_length = 0.00
 
-  vim.o.guifont = "CodeNewRoman Nerd Font Mono:h14:#e-subpixelantialias:#h-none"
+  vim.o.guifont = "JetBrainsMono Nerd Font:h14:#e-subpixelantialias:#h-none"
 end
 
 return neovide
