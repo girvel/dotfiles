@@ -16,9 +16,6 @@ keymap.init = function()
   Api.rumap("i", "<C-i>", "<Esc><C-i>", {})
   Api.rumap("v", "<C-o>", "<Esc><C-o>", {})
   Api.rumap("v", "<C-i>", "<Esc><C-i>", {})
-
-  -- shift safety --
-  Api.rumap("n", ":W", ":w")
 end
 
 return keymap
