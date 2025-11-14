@@ -34,15 +34,6 @@ return {
         },
 
         sources = {
-          {
-            name = "path",
-            option = {
-              get_cwd = function()
-                -- ignores arguments
-                return vim.fn.getcwd()
-              end,
-            },
-          },
           { name = "nvim_lsp", keyword_length = 1 },
           { name = "nvim_lua", keyword_length = 1 },
           { name = "buffer", keyword_length = 1 },
@@ -92,7 +83,6 @@ return {
   },
   {"hrsh7th/cmp-nvim-lsp"},
   {"hrsh7th/cmp-nvim-lua"},
-  {"hrsh7th/cmp-path"},
   {"hrsh7th/cmp-buffer"},
   {"hrsh7th/cmp-cmdline"},
   {"saadparwaiz1/cmp_luasnip"},
