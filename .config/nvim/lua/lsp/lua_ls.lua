@@ -237,38 +237,40 @@ end
 
 local is_attached = false
 
-lua_ls.config = {
-  on_attach = Async.make(function()
-    if is_attached then return end
-    is_attached = true
+lua_ls.get_config = function()
+  return {
+    on_attach = Async.make(function()
+      if is_attached then return end
+      is_attached = true
 
-    init_mappings()
+      init_mappings()
 
-    Async.step()
-    lua_ls.feed()
-  end),
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT"
-      },
-      diagnostics = {
-        globals = {"vim", "love"},
-        unusedLocalExclude = {"_*", "self"},
-        -- disable = {"unused-local"},
-      },
-      workspace = {
-        library = {
-          vim.env.VIMRUNTIME,
-          -- "~/Applications/lsp/lua-language-server/meta/3rd/love2d",
-          "${3rd}/love2d/library",
-          "${3rd}/luasocket/library",
+      Async.step()
+      lua_ls.feed()
+    end),
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT"
         },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
-      },
+        diagnostics = {
+          globals = {"vim", "love"},
+          unusedLocalExclude = {"_*", "self"},
+          -- disable = {"unused-local"},
+        },
+        workspace = {
+          library = {
+            vim.env.VIMRUNTIME,
+            -- "~/Applications/lsp/lua-language-server/meta/3rd/love2d",
+            "${3rd}/love2d/library",
+            "${3rd}/luasocket/library",
+          },
+          maxPreload = 100000,
+          preloadFileSize = 10000,
+        },
+      }
     }
   }
-}
+end
 
 return lua_ls

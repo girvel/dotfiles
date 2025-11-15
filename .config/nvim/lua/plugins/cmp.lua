@@ -34,11 +34,21 @@ return {
         },
 
         sources = {
-          { name = "nvim_lsp", keyword_length = 1 },
-          { name = "nvim_lua", keyword_length = 1 },
-          { name = "buffer", keyword_length = 1 },
-          { name = "luasnip" },
-          { name = "calc" },
+          {
+            name = "nvim_lsp",
+            keyword_length = 1,
+            entry_filter = function(entry, ctx)
+              if ctx.filetype == "lua" then
+                local text = entry.completion_item.insertText
+                return not text or not text:find("function ", 1, true)
+              end
+              return true
+            end,
+          },
+          {name = "nvim_lua", keyword_length = 1},
+          {name = "buffer", keyword_length = 1},
+          {name = "luasnip"},
+          {name = "calc"},
         },
 
         window = {

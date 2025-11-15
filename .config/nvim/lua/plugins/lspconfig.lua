@@ -32,7 +32,7 @@ return {
       },
     }
 
-    vim.lsp.config.lua_ls = lua_ls.config
+    vim.lsp.config.lua_ls = lua_ls.get_config()
     vim.lsp.config.clangd = {}
     vim.lsp.config.glsl_analyzer = {}
     vim.lsp.config.jedi_language_server = {}
