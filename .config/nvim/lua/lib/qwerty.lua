@@ -83,20 +83,47 @@ local ru_char_map = {
   ["/"] = '.',
 }
 
+local exceptions = {
+  "C-",
+  "M-",
+  "S-",
+  "BS",
+  "leader",
+  "cmd",
+  "Space",
+  "CR",
+  "Esc",
+  "Left",
+  "Right",
+  "Up",
+  "Down",
+  "<",
+  ">",
+}
+
 --- @param source string
 --- @return string
 qwerty.translate = function(source)
   local translation = ""
-  local is_in_brackets = false
-  for character in source:gmatch(".") do
-    if character == "<" then
-      is_in_brackets = true
-    elseif character == ">" then
-      is_in_brackets = false
-    elseif not is_in_brackets then
-      character = ru_char_map[character] or character
+
+  local i = 1
+  while true do
+    for _, ex in ipairs(exceptions) do
+      if vim.startswith(source:sub(i), ex) then
+        translation = translation .. ex
+        i = i + #ex
+        goto continue
+      end
     end
-    translation = translation .. character
+
+    do
+      local character = source:sub(i, i)
+      translation = translation .. (ru_char_map[character] or character)
+      i = i + 1
+    end
+
+    ::continue::
+    if i > #source then break end
   end
   return translation
 end

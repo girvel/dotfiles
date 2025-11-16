@@ -27,7 +27,6 @@ api.luapath_head = function(modpath)
 end
 
 local ruscmd_collisions = {
-  ZZ = true,
   gd = true,
 }
 
