@@ -184,6 +184,7 @@ snippets.init = function()
     {"[", "]", true},
     {"<", ">", false},
     -- (don't work)
+    -- {"[[", "]]", true},
     -- {'"', '"', false},
     -- {"'", "'", false},
   }
@@ -199,6 +200,11 @@ snippets.init = function()
             %s
             %s$1
             %s$0
+          ]]):format(start, tab, finish)),
+          snippet(start .. "c", ([[
+            %s
+            %s$1
+            %s,$0
           ]]):format(start, tab, finish))
         })
       end

@@ -44,7 +44,7 @@ return {
   sh = {
     tab = 4,
   },
-  go = {
+  go = {  -- TODO go uses tabs!!1!
     tab = 4,
   },
   moonspeak = {
