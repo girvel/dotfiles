@@ -9,5 +9,3 @@ require("package_manager").init()
 require("snippets").init()
 require("keymap").init()
 require("neovide").init()
-
-vim.api.nvim_create_user_command("Test", Async.make(), {})
