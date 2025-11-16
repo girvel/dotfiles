@@ -11,3 +11,8 @@
 ---
 --- If lazydev follows the same "let's fuck up user's workflow in the most unfuriating way without
 --- an option to disable it" UX doctrine, I want no part of it.
+---
+--- P.S. I was SO right about this plugin; it didn't fix the annoying "vim.uv does not exist"
+--- warnings, but added even more bullshit.
+
+return {}

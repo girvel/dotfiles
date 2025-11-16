@@ -1,5 +1,49 @@
 local lua_ls = {}
 
+
+local init_mappings
+local is_attached = false
+
+lua_ls.get_config = function()
+  return {
+    on_attach = Async.make(function()
+      if is_attached then return end
+      is_attached = true
+
+      init_mappings()
+
+      Async.step()
+      lua_ls.feed()
+    end),
+
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT"
+        },
+        diagnostics = {
+          globals = {"vim", "love"},
+          unusedLocalExclude = {"_*", "self"},
+        },
+        workspace = {
+          library = {
+            vim.env.VIMRUNTIME,
+            "${3rd}/love2d/library",
+            "${3rd}/luasocket/library",
+          },
+          maxPreload = 100000,
+          preloadFileSize = 10000,
+        },
+      }
+    }
+  }
+end
+
+
+----------------------------------------------------------------------------------------------------
+-- [SECTION] Unfucking LuaLS
+----------------------------------------------------------------------------------------------------
+
 local is_wrapped = false
 
 --- Fixes the annoying unused-local hints for function parameters
@@ -30,6 +74,7 @@ end
 
 local SECOND = 1000000000
 
+--- Fixes LuaLS failing to load all of the project
 --- @async
 lua_ls.feed = function(silent)
   local buffers = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
@@ -58,6 +103,7 @@ lua_ls.feed = function(silent)
   if bar then bar:finish() end
 end
 
+--- Replaces LuaLS' quantum shit autorequire
 --- @async
 lua_ls.auto_require = function(word)
   local buf = vim.api.nvim_get_current_buf()
@@ -99,6 +145,20 @@ lua_ls.auto_require = function(word)
   Api.feed("a")
   Async.step()
 end
+
+--- Entry filter for cmp's nvim_lsp source, fixing the function snippet with the wrong spacing
+lua_ls.cmp_filter = function(entry, ctx)
+  if ctx.filetype == "lua" then
+    local text = entry.completion_item.insertText
+    return not text or not text:find("function ", 1, true)
+  end
+  return true
+end
+
+
+----------------------------------------------------------------------------------------------------
+-- [SECTION] Nice things
+----------------------------------------------------------------------------------------------------
 
 lua_ls.parse_last_log = function()
   local filepath do
@@ -164,7 +224,7 @@ lua_ls.parse_last_log = function()
   Api.feed("<C-w>h")
 end
 
-local init_mappings = function()
+init_mappings = function()
   Api.rumap("n", "<leader>oo", lua_ls.feed, {})
 
   Api.rumap("i", "<M-.>", function()
@@ -233,44 +293,6 @@ local init_mappings = function()
       end
     end, {})
   end
-end
-
-local is_attached = false
-
-lua_ls.get_config = function()
-  return {
-    on_attach = Async.make(function()
-      if is_attached then return end
-      is_attached = true
-
-      init_mappings()
-
-      Async.step()
-      lua_ls.feed()
-    end),
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT"
-        },
-        diagnostics = {
-          globals = {"vim", "love"},
-          unusedLocalExclude = {"_*", "self"},
-          -- disable = {"unused-local"},
-        },
-        workspace = {
-          library = {
-            vim.env.VIMRUNTIME,
-            -- "~/Applications/lsp/lua-language-server/meta/3rd/love2d",
-            "${3rd}/love2d/library",
-            "${3rd}/luasocket/library",
-          },
-          maxPreload = 100000,
-          preloadFileSize = 10000,
-        },
-      }
-    }
-  }
 end
 
 return lua_ls
