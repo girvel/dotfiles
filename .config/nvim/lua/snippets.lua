@@ -190,7 +190,7 @@ snippets.init = function()
   }
 
   for language, data in pairs(language_styles) do
-    local tab = string.rep(" ", data.tab)
+    local tab = data.uses_tabs and "\t" or string.rep(" ", data.tab)
     for _, t in ipairs(pair_chars) do
       local start, finish, expands = unpack(t)
 

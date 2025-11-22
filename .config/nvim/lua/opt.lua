@@ -46,18 +46,10 @@ opt.init = function()
         vim.opt_local.tabstop = data.tab
         vim.opt_local.shiftwidth = data.tab
         vim.opt_local.softtabstop = data.tab
+        vim.opt_local.expandtab = not data.uses_tabs
       end
     })
   end
-
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = "html",
-    callback = function()
-      vim.opt_local.tabstop = 2
-      vim.opt_local.shiftwidth = 2
-      vim.opt_local.softtabstop = 2
-    end
-  })
 
   vim.diagnostic.config {
     virtual_text = true,

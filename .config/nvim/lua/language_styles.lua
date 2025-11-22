@@ -46,6 +46,7 @@ return {
   },
   go = {  -- TODO go uses tabs!!1!
     tab = 4,
+    uses_tabs = true,
   },
   moonspeak = {
     tab = 2,
