@@ -5,7 +5,6 @@ keybind = alt+right=next_tab
 keybind = alt+l=next_tab
 keybind = alt+д=next_tab
 
-keybind = ctrl+shift+o=unbind
 keybind = ctrl+shift+e=unbind
 keybind = f11=toggle_fullscreen
 

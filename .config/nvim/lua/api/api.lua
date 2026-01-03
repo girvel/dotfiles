@@ -16,6 +16,9 @@ end
 api.luapath = function(file_path)
   -- (multiple return values)
   local result = file_path:gsub("^%./", ""):gsub("%.lua$", ""):gsub("[/\\]", ".")
+  if vim.endswith(result, ".init") then
+    result = result:sub(1, -6)
+  end
   return result
 end
 

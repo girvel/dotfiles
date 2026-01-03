@@ -71,8 +71,12 @@ alias lpe='e $(looper path schedule)'
 function mix() {
     gh issue list --state all --json number,title,body,comments -L 999 | \
         jq 'map({number, title, body, comments: (.comments | map(.body))})' > github-issues-dump.json
-    repomix -o ~/Desktop/repomix-output.xml
-    rm github-issues-dump.json
+    git diff > git-diff-dump.txt
+    git status > git-status-dump.txt
+    # Strips color codes
+    # tail -n 200 /tmp/zsh_session.log | sed 's/\x1b\[[0-9;]*m//g' > terminal-history-dump.txt
+    repomix -o ~/Desktop/repomix-output.md
+    rm github-issues-dump.json git-diff-dump.txt git-status-dump.txt
 }
 
 autoload zmv
