@@ -201,17 +201,25 @@ snippets.init = function()
             %s$1
             %s$0
           ]]):format(start, tab, finish)),
+
           snippet(start .. "c", ([[
             %s
             %s$1
             %s,$0
+          ]]):format(start, tab, finish)),
+
+          snippet(start .. "s", ([[
+            %s
+            %s$1
+            %s;$0
           ]]):format(start, tab, finish))
         })
       end
 
       luasnip.add_snippets(language, {
         snippet(start .. finish,        start .. "$1" .. finish .. "$0"),
-        snippet(start .. finish .. "c", start .. "$1" .. finish .. ",$0")
+        snippet(start .. finish .. "c", start .. "$1" .. finish .. ",$0"),
+        snippet(start .. finish .. "s", start .. "$1" .. finish .. ";$0")
       })
     end
   end
