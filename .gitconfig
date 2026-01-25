@@ -3,6 +3,8 @@
 	email = widauka@ya.ru
 [push]
 	autoSetupRemote = true
+[pull]
+	rebase = false
 [core]
 	editor = nvim
 	autocrlf = input
@@ -12,17 +14,17 @@
 	renames = true
 [commit]
 	verbose = true
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
 [init]
 	defaultBranch = master
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[include]
+    path = ~/.gitconfig.local
 # [https]
 #     proxy = "socks5h://192.168.0.240:1080"
 # [http]
 #     proxy = "socks5h://192.168.0.240:1080"
-[pull]
-	rebase = false
