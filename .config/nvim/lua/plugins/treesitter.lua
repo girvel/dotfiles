@@ -1,35 +1,28 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  lazy = false,
+  build = ":TSUpdate",
   config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = {
-        "bash",
-        "c",
-        "glsl",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "python",
-        "rust",
-        "toml",
-        "toml",
-        "typescript",
-        "xml",
-        "yaml",
-      },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      ident = { enable = false },
-      rainbow = {
-        enable = true,
-        extended_mode = true,
-        max_file_lines = nil,
-      },
+    -- NixOS gets weird without that
+    local parser_path = vim.fn.stdpath("data") .. "/treesitter-parsers"
+    vim.opt.runtimepath:prepend(parser_path)
+
+    require("nvim-treesitter").install({
+      "bash",
+      "c",
+      "glsl",
+      "html",
+      "javascript",
+      "json",
+      "lua",
+      "markdown",
+      "python",
+      "rust",
+      "toml",
+      "toml",
+      "typescript",
+      "xml",
+      "yaml",
     })
 
     vim.wo.foldmethod = "expr"
