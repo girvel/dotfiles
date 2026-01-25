@@ -44,11 +44,14 @@ return {
   sh = {
     tab = 4,
   },
-  go = {  -- TODO go uses tabs!!1!
+  go = {
     tab = 4,
     uses_tabs = true,
   },
   moonspeak = {
+    tab = 2,
+  },
+  nix = {
     tab = 2,
   },
 }
