@@ -11,6 +11,9 @@ keymap.init = function()
   Api.rumap("n", "<leader>lr", vim.lsp.buf.rename, {})
   Api.rumap("n", "<leader>lf", vim.diagnostic.open_float, {})
   Api.rumap("n", "gD", vim.lsp.buf.declaration, {})
+
+  Api.rumap("n", "<leader>dd", "^t]rx")
+  Api.rumap("n", "<leader>ds", "^t]r ")
 end
 
 return keymap
