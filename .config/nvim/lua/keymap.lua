@@ -14,6 +14,8 @@ keymap.init = function()
 
   Api.rumap("n", "<leader>dd", "^t]rx")
   Api.rumap("n", "<leader>ds", "^t]r ")
+
+  Api.rumap("i", "<D-Space>", "")  -- fixes GNOME issues
 end
 
 return keymap
