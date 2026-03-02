@@ -26,7 +26,6 @@ alias l='eza -lAh --group-directories-first'
 function lm() {
     eza -lAr -s=modified --color=always "$@" | head -n 20
 }
-alias cb='xclip -selection clipboard'
 
 # EDITOR #
 alias erc='e ~/.zshrc; source ~/.zshrc'
