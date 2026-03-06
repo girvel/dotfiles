@@ -10,10 +10,11 @@ return {
       separator_style = "slant",
       offsets = {
         {
-          filetype = "neo-tree",
-          text = "Neo-tree",
-          highlight = "Directory",
+          filetype = "NvimTree",
+          text = "File Structure",
+          -- highlight = "Directory",
           text_align = "left",
+          separate = true,
         },
         {
           filetype = "snacks_layout_box",
