@@ -78,6 +78,12 @@ function mix() {
     rm github-issues-dump.json git-diff-dump.txt git-status-dump.txt
 }
 
+function mixs() {
+    cb > shell-dump.txt
+    mix
+    rm shell-dump.txt
+}
+
 autoload zmv
 setopt extendedglob
 
