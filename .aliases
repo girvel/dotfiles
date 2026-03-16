@@ -14,6 +14,7 @@ else
 fi
 
 # BASE #
+export WS=$WORKSHOP
 cdw () {
     cd $WORKSHOP/$1
 }
