@@ -1,18 +1,18 @@
---- This piece of shit FOLDS MY FUCKING FUNCTIONS
----
---- I have enough intrusive plugins as it is; I've had enough disgraceful behaviour from the LuaLS
---- itself:
----
---- - a function snippet with incorrect spacing
---- - an auto-require with shit UI/UX that barely works
---- - the consistent failure to load project whole
---- - a very stupid `unused local` hint that both searches for unused imports (useful) and screams
----   at unused function arguments (annoying as fuck)
----
---- If lazydev follows the same "let's fuck up user's workflow in the most unfuriating way without
---- an option to disable it" UX doctrine, I want no part of it.
----
---- P.S. I was SO right about this plugin; it didn't fix the annoying "vim.uv does not exist"
---- warnings, but added even more bullshit.
+-- This piece of shit FOLDS MY FUCKING FUNCTIONS
+--
+-- I have enough intrusive plugins as it is; I've had enough disgraceful behaviour from the LuaLS
+-- itself:
+--
+-- - a function snippet with incorrect spacing
+-- - an auto-require with shit UI/UX that barely works
+-- - the consistent failure to load project whole
+-- - a very stupid `unused local` hint that both searches for unused imports (useful) and screams
+--   at unused function arguments (annoying as fuck)
+--
+-- If lazydev follows the same "let's fuck up user's workflow in the most unfuriating way without
+-- an option to disable it" UX doctrine, I want no part of it.
+--
+-- P.S. I was SO right about this plugin; it didn't fix the annoying "vim.uv does not exist"
+-- warnings, but added even more bullshit.
 
 return {}

@@ -8,9 +8,9 @@ Config = {
 require("opt").init()
 require("keymap").init()
 require("package_manager").init()
+require("neovide").init()
 
 if Config.is_typewriter then return end
 
 require("lsp.lua_ls").wrap_diagnostics()
 require("snippets").init()
-require("neovide").init()

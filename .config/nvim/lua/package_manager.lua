@@ -22,13 +22,19 @@ package_manager.init = function()
     plugins = {}
     for _, filename in ipairs(plugin_configs) do
       if not vim.endswith(filename, ".lua") then goto continue end
-      local config = require("plugins." .. filename:sub(1, -5))
+      local mod = require("plugins." .. filename:sub(1, -5))
 
-      if not Config.is_typewriter or (
-        config.custom_tags and
-        vim.tbl_contains(config.custom_tags, "lite")
-      ) then
-        table.insert(plugins, config)
+      for _, plugin in ipairs(
+        type(mod[1]) == "table"
+          and mod
+          or {mod}
+      ) do
+        local tags = mod.custom_tags or plugin.custom_tags
+        if not Config.is_typewriter or (
+          tags and vim.tbl_contains(tags, "lite")
+        ) then
+          table.insert(plugins, plugin)
+        end
       end
 
       ::continue::

@@ -1,6 +1,7 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
+  custom_tags = {"lite"},
   ---@module "ibl"
   ---@type ibl.config
   opts = {
