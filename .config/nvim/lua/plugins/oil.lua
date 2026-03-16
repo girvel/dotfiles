@@ -1,5 +1,5 @@
 return {
-  -- TODO consider switching to oil fully
+  -- Oil would not be used, because its functionality is not full: it can't move files between directories by editing the buffer.
 
   -- "stevearc/oil.nvim",
   -- --- @module 'oil'

@@ -12,6 +12,7 @@ return {
       ensure_installed = {
         "bash",
         "c",
+        "go",
         "glsl",
         "html",
         "javascript",
@@ -25,6 +26,10 @@ return {
         "typescript",
         "xml",
         "yaml",
+      },
+
+      highlight = {
+        enable = true,
       },
     })
 

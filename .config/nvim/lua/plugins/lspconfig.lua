@@ -36,7 +36,11 @@ return {
     vim.lsp.config.clangd = {}
     vim.lsp.config.glsl_analyzer = {}
     vim.lsp.config.jedi_language_server = {}
-    vim.lsp.config.gopls = {}
+    vim.lsp.config.gopls = {
+      on_attach = function(client, bufnr)
+        client.server_capabilities.semanticTokensProvider = nil
+      end,
+    }
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
