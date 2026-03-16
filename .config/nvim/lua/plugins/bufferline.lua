@@ -11,7 +11,7 @@ return {
       offsets = {
         {
           filetype = "NvimTree",
-          text = "File Structure",
+          text = "",
           -- highlight = "Directory",
           text_align = "left",
           separate = true,
