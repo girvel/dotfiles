@@ -2,6 +2,7 @@ return {
   "nvim-telescope/telescope.nvim",
   branch = "master",
   dependencies = { "nvim-lua/plenary.nvim" },
+  custom_tags = {"lite"},
   config = function()
     require("telescope").setup {
       defaults = {
