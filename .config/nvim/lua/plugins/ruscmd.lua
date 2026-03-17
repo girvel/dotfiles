@@ -1,7 +1,14 @@
 return {
   "aveplen/ruscmd.nvim",
   config = function()
+    local oldmap = vim.api.nvim_set_keymap
+    vim.api.nvim_set_keymap = function(mode, lhs, rhs, opts)  --- @diagnostic disable-line
+      if vim.fn.maparg(lhs, mode) == "" then
+        oldmap(mode, lhs, rhs, opts)
+      end
+    end
     require("ruscmd").setup {}
+    vim.api.nvim_set_keymap = oldmap
 
     vim.keymap.set("n", "<C-ц>р", "<C-w>h")
     vim.keymap.set("n", "<C-ц>о", "<C-w>j")
