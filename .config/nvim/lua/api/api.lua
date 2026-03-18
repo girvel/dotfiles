@@ -46,9 +46,12 @@ api.rumap = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
   if ruscmd_collisions[lhs] then return end
 
-  local opts_copy = opts and vim.tbl_extend("force", {}, opts) or {}
-  opts_copy.desc = string.format("RU equivalent of %s", lhs)
-  vim.keymap.set(mode, qwerty.translate(lhs), rhs, opts_copy)
+  local translation = qwerty.translate(lhs)
+  if translation ~= lhs then
+    local opts_copy = opts and vim.tbl_extend("force", {}, opts) or {}
+    opts_copy.desc = string.format("RU equivalent of %s", lhs)
+    vim.keymap.set(mode, translation, rhs, opts_copy)
+  end
 end
 
 return api
