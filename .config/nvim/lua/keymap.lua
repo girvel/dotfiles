@@ -17,6 +17,12 @@ keymap.init = function()
   Api.rumap("n", "<leader>ds", "^t]r ", {desc = "Uncomplete markdown task"})
 
   Api.rumap("i", "<D-Space>", "", {desc = "Empty action to fix GNOME issues"})
+
+  Api.rumap("n", "<leader>gf", function()
+    local dir = vim.fn.expand("%:p:h")
+    local file = vim.fn.expand("<cWORD>")
+    vim.cmd.edit(dir .. "/" .. file)
+  end, {desc = "Go to file even if it does not exist"})
 end
 
 return keymap
