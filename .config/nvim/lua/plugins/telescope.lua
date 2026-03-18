@@ -41,6 +41,8 @@ return {
     Api.rumap("n", "<leader>fo", keep(builtin.oldfiles), {})
     Api.rumap("n", "<leader>fg", keep(builtin.live_grep), {})
     Api.rumap("n", "<leader>fh", keep(builtin.help_tags), {})
+    Api.rumap("n", "<leader>fm", keep(builtin.keymaps), {})
+
     Api.rumap("v", "<leader>fg", '"zy:Telescope live_grep default_text=<C-r>z<cr>', {})
     Api.rumap("n", "<leader>fr", builtin.resume, {})
     Api.rumap("n", "<leader>fn", ":Telescope notify<CR>", {})
