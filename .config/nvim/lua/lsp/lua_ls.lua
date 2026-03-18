@@ -18,6 +18,9 @@ lua_ls.get_config = function()
 
     settings = {
       Lua = {
+        completion = {
+          autoRequire = false,
+        },
         runtime = {
           version = "LuaJIT"
         },
