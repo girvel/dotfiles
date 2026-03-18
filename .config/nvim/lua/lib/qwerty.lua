@@ -87,6 +87,7 @@ local exceptions = {
   "C-",
   "M-",
   "S-",
+  "D-",
   "BS",
   "leader",
   "cmd",
