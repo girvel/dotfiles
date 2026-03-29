@@ -1,17 +1,8 @@
 #!/usr/bin/env zsh
 
-# CROSS-PLATFORM SHIT #
-if [ -n "$WSL_DISTRO_NAME" ]; then
-    alias g="git.exe"
-    alias c='cargo.exe'
-    alias love='love.exe .'
-    alias z="zig.exe"
-    alias ad='arduino-cli.exe'
-else
-    alias g="git"
-    alias c="cargo"
-    alias z="zig"
-fi
+export PROMPT="
+%B%F{red}%n%b%F{white}@%m %~ %# "
+source $HOME/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # BASE #
 export WS=$WORKSHOP
@@ -48,6 +39,19 @@ function gacpm() {
 alias gst='g status'
 alias gd='g diff'
 alias glog='g log --oneline --graph'
+
+# WSL-linux compatiblitity #
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    alias g="git.exe"
+    alias c='cargo.exe'
+    alias love='love.exe .'
+    alias z="zig.exe"
+    alias ad='arduino-cli.exe'
+else
+    alias g="git"
+    alias c="cargo"
+    alias z="zig"
+fi
 
 # GITHUB #
 alias td='gh issue create --body "" --title'
