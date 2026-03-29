@@ -23,6 +23,9 @@ keymap.init = function()
     local file = vim.fn.expand("<cWORD>")
     vim.cmd.edit(dir .. "/" .. file)
   end, {desc = "Go to file even if it does not exist"})
+
+  Api.rumap("v", "<C-j>", ":m '>+<C-r>=v:count1<CR><CR>gv", {desc = "Move selection down"})
+  Api.rumap("v", "<C-k>", ":m '<-<C-r>=v:count1+1<CR><CR>gv", {desc = "Move selection up"})
 end
 
 return keymap
