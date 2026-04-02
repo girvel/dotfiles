@@ -4,18 +4,31 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   custom_tags = {"lite"},
   config = function()
+    local builtin = require("telescope.builtin")
+    local action_state = require("telescope.actions.state")
+    local actions = require("telescope.actions")
+
     require("telescope").setup {
       defaults = {
         file_ignore_patterns = {".git"},
         hidden = true,
+        mappings = {
+          i = {
+            ["<C-f>"] = function(prompt_bufnr)
+              vim.notify(("|%s|"):format(action_state.get_current_line()))
+              actions.send_to_qflist(prompt_bufnr)
+              actions.open_qflist()
+              local to_replace = action_state.get_current_line()
+              Api.feed((":cfdo %%s/%s/%s/gc<left><left><left>"):format(to_replace, to_replace))
+            end
+          },
+        },
       },
       pickers = {
         find_files = {hidden = true},
         live_grep = {additional_args = {"--hidden", "--glob", "!*.ldtk"}},
       }
     }
-
-    local builtin = require("telescope.builtin")
 
     local keep = function(picker_f)
       return function()

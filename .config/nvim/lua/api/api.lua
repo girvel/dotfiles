@@ -49,7 +49,7 @@ api.rumap = function(mode, lhs, rhs, opts)
   local translation = qwerty.translate(lhs)
   if translation ~= lhs then
     local opts_copy = opts and vim.tbl_extend("force", {}, opts) or {}
-    opts_copy.desc = string.format("RU equivalent of %s", lhs)
+    opts_copy.desc = "(RU)" .. (opts_copy.desc or "")
     vim.keymap.set(mode, translation, rhs, opts_copy)
   end
 end
