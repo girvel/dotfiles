@@ -163,9 +163,43 @@ end
 -- [SECTION] Nice things
 ----------------------------------------------------------------------------------------------------
 
+local read_identity = function()
+  local folder_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+  if vim.uv.fs_stat("./conf.lua") == nil then
+    return folder_name
+  end
+
+  love = {}
+  local ok, res = pcall(dofile, "./conf.lua")
+  if not ok then
+    vim.notify(
+      ("dofile error for ./conf.lua, is this a LOVE project?\n%s"):format(res),
+      vim.log.levels.ERROR
+    )
+    love = nil  --- @diagnostic disable-line
+    return
+  end
+
+  local config = {window = {}}
+  ok, res = pcall(love.conf, config)
+  love = nil  --- @diagnostic disable-line
+  if not ok then
+    vim.notify(
+      ("Error running love.conf, ./conf.lua may be broken.\n%s"):format(res),
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  return config.identity or folder_name
+end
+
 lua_ls.parse_last_log = function()
+  local identity = read_identity()
+  if not identity then return end
+
   local filepath do
-    local logs = vim.fn.globpath("~/.local/share/love/dot/logs", "*.txt", true, true)
+    local logs = vim.fn.globpath("~/.local/share/love/" .. identity .. "/logs", "*.txt", true, true)
     table.sort(logs)
     filepath = logs[#logs]
   end

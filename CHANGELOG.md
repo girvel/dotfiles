@@ -11,6 +11,7 @@
 
 ## Quickies
 
+- [ ] Make \<C-e> project-independent
 - [ ] Ctrl+Shift+T RU binding for ghostty
 - [ ] Ctrl+W movements in RU
 - [ ] \<C-e> & \<C-S-e> not on luals attach but always
@@ -18,7 +19,7 @@
 - [ ] bug: "hint" level LSP hints are on top of "error" level LSP hints
 - [ ] Auto-require should work differently for projects that contain "**/nvim/lua" folder
 - [ ] Telescope should open buffers as unlisted
-- [ ] Auto-import should consider shebangs and documentation comments
+- [ ] Auto-import should consider shebangs and documentation comments, create 2 line spacing if needed
 - [ ] Warn when doing \<leader>bc on updated buffer
 - [ ] \<C-e> returns to the wrong window in vertical split
 - [ ] Auto-insert `- [ ]` in .md files
