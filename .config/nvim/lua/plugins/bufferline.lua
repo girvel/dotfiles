@@ -83,6 +83,12 @@ return {
       go_to_prev_listed_buffer()
     end, {})
 
+    Api.rumap("n", "<leader>bd", function()
+      Api.feed(":bd!<CR>")
+      Async.step()
+      go_to_prev_listed_buffer()
+    end, {})
+
     -- TODO insert mode
     Api.rumap("n", "<C-S-o>", go_to_prev_listed_buffer, {})
 
