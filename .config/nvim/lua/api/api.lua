@@ -54,4 +54,12 @@ api.rumap = function(mode, lhs, rhs, opts)
   end
 end
 
+--- @generic T
+--- @param x T
+--- @return T
+api.debug = function(x)
+  vim.notify(vim.inspect(x))
+  return x
+end
+
 return api
