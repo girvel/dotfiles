@@ -15,10 +15,9 @@ return {
         mappings = {
           i = {
             ["<C-f>"] = function(prompt_bufnr)
-              vim.notify(("|%s|"):format(action_state.get_current_line()))
               actions.send_to_qflist(prompt_bufnr)
               actions.open_qflist()
-              local to_replace = action_state.get_current_line()
+              local to_replace = action_state.get_current_line():gsub("/", "\\/")
               Api.feed((":cfdo %%s/%s/%s/gc<left><left><left>"):format(to_replace, to_replace))
             end
           },
