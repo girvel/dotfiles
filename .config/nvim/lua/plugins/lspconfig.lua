@@ -33,7 +33,12 @@ return {
     }
 
     vim.lsp.config.lua_ls = lua_ls.get_config()
-    vim.lsp.config.clangd = {}
+    vim.lsp.config.clangd = {
+      on_attach = function(client, bufnr)
+        -- disable graying based on #ifdef
+        client.server_capabilities.semanticTokensProvider = nil
+      end,
+    }
     vim.lsp.config.glsl_analyzer = {}
     vim.lsp.config.jedi_language_server = {}
     vim.lsp.config.gopls = {
