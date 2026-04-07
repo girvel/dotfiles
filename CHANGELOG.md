@@ -8,6 +8,7 @@
 - [ ] Descriptions for custom mappings
 - [ ] Write my own path compeltion
 - [ ] Try blink
+- [ ] Usable terminal: replace flatten with nvr or fix flatten UX
 
 ## Quickies
 
