@@ -26,6 +26,9 @@ keymap.init = function()
 
   Api.rumap("v", "<C-j>", ":m '>+<C-r>=v:count1<CR><CR>gv", {desc = "Move selection down"})
   Api.rumap("v", "<C-k>", ":m '<-<C-r>=v:count1+1<CR><CR>gv", {desc = "Move selection up"})
+
+  Api.rumap("v", "<", "<'<V'>", {desc = "Dedent while preserving visual mode"})
+  Api.rumap("v", ">", ">'<V'>", {desc = "Indent while preserving visual mode"})
 end
 
 return keymap
