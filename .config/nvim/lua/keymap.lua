@@ -29,6 +29,9 @@ keymap.init = function()
 
   Api.rumap("v", "<", "<'<V'>", {desc = "Dedent while preserving visual mode"})
   Api.rumap("v", ">", ">'<V'>", {desc = "Indent while preserving visual mode"})
+
+  Api.rumap("n", "]e", function() vim.diagnostic.jump {count = 1} end, {desc = "Next error"})
+  Api.rumap("n", "[e", function() vim.diagnostic.jump {count = -1} end, {desc = "Prev error"})
 end
 
 return keymap
