@@ -19,6 +19,8 @@ return {
     vim.keymap.set("n", "<C-м>", "<C-v>")
     vim.keymap.set("n", "<C-S-м>", '"+p')
     vim.keymap.set("n", "<C-к>", '<C-r>')
+    vim.keymap.set("n", "<C-в>", '<C-d>')
+    vim.keymap.set("n", "<C-г>", '<C-u>')
 
     vim.cmd.cnoreabbrev("цй wq")
     vim.cmd.cnoreabbrev("цф wa")
