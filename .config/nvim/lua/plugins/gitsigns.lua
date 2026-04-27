@@ -8,9 +8,10 @@ return {
     -- gitsigns' refresh does not work by default
     vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
       pattern = "*",
-      callback = function()
+      callback = function(args)
         vim.schedule(function()
-          gitsigns.refresh()
+          gitsigns.detach(args.buf)
+          gitsigns.attach(args.buf)
         end)
       end,
     })
