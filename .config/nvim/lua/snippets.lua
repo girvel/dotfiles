@@ -12,30 +12,31 @@ snippets.init = function()
       [[
         --- @type scene
         $1 = {
-          start_predicate = function(self, dt)
+          condition = function(self, name, dt)
             return $2
           end,
 
-          run = function(self)
+          run = function(self, name)
             $0
           end,
         },
       ]]
     ),
     snippet(
-      "scc",
+      "cs",
       [[
-        --- @type scene
-        $1 = {
+        $1 = cutscene.make {
+          enabled = $2,
+          screenplay = "assets/screenplay/$3.ms",
           characters = {
-            $2
+            $4
           },
 
-          start_predicate = function(self, dt, ch, ps)
-            return $3
+          condition = function(self, dt, ch, ps)
+            return $5
           end,
 
-          run = function(self, ch, ps)
+          run = function(self, ch, ps, sp)
             $0
           end,
         },
