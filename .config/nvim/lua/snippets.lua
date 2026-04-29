@@ -32,11 +32,11 @@ snippets.init = function()
             $4
           },
 
-          condition = function(self, dt, ch, ps)
+          _condition = function(self, dt, ch, ps)
             return $5
           end,
 
-          run = function(self, ch, ps, sp)
+          _run = function(self, ch, ps, sp)
             $0
           end,
         },
