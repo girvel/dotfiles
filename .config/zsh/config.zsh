@@ -12,11 +12,12 @@ export WS=$WORKSHOP
 cdw () {
     cd $WORKSHOP/$1
 }
+export SUDO_EDITOR=$EDITOR
+alias e='$EDITOR'
+alias E='sudo -e'
 
 alias A='sudo apt'
 alias a='apt'
-alias e='$EDITOR'
-alias E='sudo $EDITOR'
 alias l='eza -lAh --group-directories-first'
 function lm() {
     eza -lAr -s=modified --color=always "$@" | head -n 20
