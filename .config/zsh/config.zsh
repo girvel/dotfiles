@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
+export ZSH=$HOME/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
 export PROMPT="
 %B%F{red}%n%b%F{white}@%m %~ %# "
 source $HOME/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-export ZSH=$HOME/.oh-my-zsh
-source $ZSH/oh-my-zsh.sh
 
 # BASE #
 export WS=$WORKSHOP
