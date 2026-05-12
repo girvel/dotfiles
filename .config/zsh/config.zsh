@@ -5,6 +5,7 @@ export PROMPT="
 source $HOME/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export ZSH=$HOME/.oh-my-zsh
+export fpath=(~/.config/zsh/completions $fpath)
 source $ZSH/oh-my-zsh.sh
 
 # BASE #

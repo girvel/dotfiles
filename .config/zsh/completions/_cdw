@@ -1,0 +1,8 @@
+#compdef cdw
+
+# to evaluate $WORKSHOP dynamically
+_cdw() {
+  _files -W "$WORKSHOP" -/
+}
+
+_cdw "$@"
