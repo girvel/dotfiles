@@ -1,5 +1,6 @@
 return {
   "nvim-tree/nvim-tree.lua",
+  custom_tags = {"lite"},
   config = function()
     require("nvim-tree").setup({})
     Api.rumap("n", "<leader>tf", ":NvimTreeFocus<CR>")
