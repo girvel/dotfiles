@@ -10,7 +10,7 @@ return {
           api.tree.close()
         end
 
-        api.map.on_attach.default(bufnr)
+        api.config.mappings.default_on_attach(bufnr)
         Api.rumap("n", "o", open_inplace, {buffer = bufnr})
         if Config.is_typewriter then
           Api.rumap("n", "<CR>", open_inplace, {buffer = bufnr})
