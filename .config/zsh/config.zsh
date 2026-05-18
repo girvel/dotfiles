@@ -1,12 +1,13 @@
 #!/usr/bin/env zsh
 
-export PROMPT="
-%B%F{red}%n%b%F{white}@%m %~ %# "
-source $HOME/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 export ZSH=$HOME/.oh-my-zsh
 export fpath=(~/.config/zsh/completions $fpath)
 source $ZSH/oh-my-zsh.sh
+
+export PROMPT="%(?..
+%F{red}returned%f %?)
+%B%F{red}%n%b%F{white}@%m %~ %# "
+source $HOME/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # BASE #
 export WS=$WORKSHOP

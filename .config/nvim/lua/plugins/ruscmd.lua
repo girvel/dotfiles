@@ -1,5 +1,6 @@
 return {
   "aveplen/ruscmd.nvim",
+  custom_tags = {"lite"},
   config = function()
     local oldmap = vim.api.nvim_set_keymap
     vim.api.nvim_set_keymap = function(mode, lhs, rhs, opts)  --- @diagnostic disable-line
