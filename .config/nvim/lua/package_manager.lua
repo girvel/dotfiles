@@ -23,6 +23,12 @@ package_manager.init = function()
     for _, filename in ipairs(plugin_configs) do
       if not vim.endswith(filename, ".lua") then goto continue end
       local mod = require("plugins." .. filename:sub(1, -5))
+      if type(mod) == "boolean" then
+        if not mod then
+          error("Unable to load package "..filename)
+        end
+        goto continue
+      end
 
       for _, plugin in ipairs(
         type(mod[1]) == "table"
