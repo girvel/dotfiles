@@ -22,7 +22,7 @@ alias A='sudo apt'
 alias a='apt'
 alias l='eza -lAh --group-directories-first'
 function lm() {
-    eza -lAr -s=modified --color=always "$@" | head -n 20
+    eza -lA -s=modified --color=always "$@" | head -n 20
 }
 
 # EDITOR #
