@@ -20,6 +20,8 @@ alias E='sudo -e'
 
 alias A='sudo apt'
 alias a='apt'
+alias I='sudo xbps-install -S'
+alias q='xbps-query -Rs'
 alias l='eza -lAh --group-directories-first'
 function lm() {
     eza -lA -s=modified --color=always "$@" | head -n 20
