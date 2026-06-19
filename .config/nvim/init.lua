@@ -9,6 +9,7 @@ require("opt").init()
 require("keymap").init()
 require("package_manager").init()
 require("neovide").init()
+require("safety").init()
 
 if Config.is_typewriter then return end
 

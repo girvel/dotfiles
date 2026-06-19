@@ -1,3 +1,5 @@
+-- NOTICE not used, font rendering is shit
+
 local neovide = {}
 
 neovide.init = function()
