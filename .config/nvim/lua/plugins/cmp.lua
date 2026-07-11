@@ -7,7 +7,34 @@ return {
     config = function()
       local luasnip = require("luasnip")
       local cmp = require("cmp")
-      local lspkind = require("lspkind")
+
+      local kind_icons = {
+        Text = "󰉿",
+        Method = "󰆧",
+        Function = "󰊕",
+        Constructor = "",
+        Field = "󰜢",
+        Variable = "󰀫",
+        Class = "󰠱",
+        Interface = "",
+        Module = "",
+        Property = "󰜢",
+        Unit = "󰑭",
+        Value = "󰎠",
+        Enum = "",
+        Keyword = "󰌋",
+        Snippet = "",
+        Color = "󰏘",
+        File = "󰈙",
+        Reference = "󰈇",
+        Folder = "󰉋",
+        EnumMember = "",
+        Constant = "󰏿",
+        Struct = "󰙅",
+        Event = "",
+        Operator = "󰆕",
+        TypeParameter = "󰊄",
+      }
 
       cmp.setup({
         snippet = {
@@ -59,15 +86,16 @@ return {
 
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = lspkind.cmp_format {
-            mode = "symbol",
-            maxwidth = {
-              menu = 50,
-              abbr = 50,
-            },
-            ellipsis_char = '...',
-            show_labelDetails = true,
-          },
+          format = function(entry, vim_item)
+            vim_item.kind = kind_icons[vim_item.kind] or vim_item.kind
+            if string.len(vim_item.abbr or "") > 50 then
+              vim_item.abbr = vim_item.abbr:sub(1, 47).."..."
+            end
+            if string.len(vim_item.menu or "") > 50 then
+              vim_item.menu = vim_item.menu:sub(1, 47).."..."
+            end
+            return vim_item
+          end,
         },
       })
 
@@ -93,5 +121,4 @@ return {
   {"hrsh7th/cmp-buffer"},
   {"hrsh7th/cmp-cmdline"},
   {"saadparwaiz1/cmp_luasnip"},
-  {"onsails/lspkind.nvim"},
 }
