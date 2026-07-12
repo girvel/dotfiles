@@ -1,7 +1,10 @@
 local async = {}
 async.make = function(f)
   return function(...)
-    coroutine.resume(coroutine.create(f), ...)
+    local ok, res = coroutine.resume(coroutine.create(f), ...)
+    if not ok then
+      error(res, 1)
+    end
   end
 end
 
@@ -57,7 +60,7 @@ async.resume = function(f)
       if not ok then
         error(result[1], 1)
       end
-      return result
+      return unpack(result)
     end
 
     return f(...)
