@@ -165,14 +165,23 @@ snippets.init = function()
   })
 
   luasnip.add_snippets("c", {
-    snippet(
-      "for",
-      [[
-        for (size_t $1 = 0; $1 < $2; $1++) {
-            $3
-        }$0
-      ]]
-    ),
+    snippet("for", [[
+      for (size_t $1 = 0; $1 < $2; $1++) {
+          $3
+      }$0
+    ]]),
+
+    snippet("st", [[
+      typedef struct {
+          $2
+      } $1;$0
+    ]]),
+
+    snippet("en", [[
+      typedef enum {
+          $2
+      } $1;$0
+    ]])
   })
 
   luasnip.add_snippets("zig", {
