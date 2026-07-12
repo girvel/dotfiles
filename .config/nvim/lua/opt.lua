@@ -26,6 +26,7 @@ opt.init = function()
   vim.opt.termguicolors = true
 
   vim.g.mapleader = " "
+  vim.g.c_syntax_for_h = 1
 
   vim.cmd("filetype indent off")
   vim.cmd("set cc=100")
