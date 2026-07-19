@@ -134,7 +134,9 @@ lua_ls.auto_require = function(word)
   -- TODO bug normal mode in input
   local modpath
   if #candidates == 0 then
-    modpath = Ui.input("enter modpath")
+    local raw_path = Ui.telescope_file_picker("enter modpath for '"..word.."'")
+    if not raw_path then return end
+    modpath = Api.luapath(raw_path)
   else
     if #candidates == 1 then
       modpath = candidates[1]

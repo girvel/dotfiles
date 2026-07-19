@@ -102,6 +102,42 @@ ui.menu = function(title, items, opts)
   return coroutine.yield()
 end
 
+--- @async
+--- @param title string
+--- @param default string?
+--- @return string?
+ui.telescope_file_picker = function(title, default)
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
+  local builtin = require("telescope.builtin")
+
+  local thread = coroutine.running()
+
+  builtin.find_files({
+    prompt_title = title,
+    default_text = default,
+    attach_mappings = function(prompt_bufnr)
+      actions.select_default:replace(function()
+        local selection = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+        coroutine.resume(thread, selection and selection[1] or nil)
+      end)
+
+      vim.api.nvim_create_autocmd("BufLeave", {
+        buffer = prompt_bufnr,
+        once = true,
+        callback = function()
+          vim.schedule(function() coroutine.resume(thread, nil) end)
+        end,
+      })
+
+      return true
+    end,
+  })
+
+  return coroutine.yield()
+end
+
 --- @class ui_input_opts
 --- @field width? integer
 

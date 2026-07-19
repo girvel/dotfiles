@@ -64,5 +64,12 @@ return {
     -- Api.rumap("n", "<leader>ft", builtin.treesitter, {})
     -- Api.rumap("n", "<leader>fb", builtin.buffers, {})
     Api.rumap("v", "<leader>rr", '"zy:%s/<C-r>z/<C-r>z')
+
+    Api.rumap("i", "<M-f>", Async.make(function()
+      local path = Ui.telescope_file_picker("select file")
+      if path then
+        vim.api.nvim_put({path}, "c", true, true)
+      end
+    end), {desc = "Telescope: insert filepath"})
   end,
 }
