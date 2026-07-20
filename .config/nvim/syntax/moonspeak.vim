@@ -2,6 +2,9 @@ if exists("b:current_syntax")
     finish
 endif
 
+syn match msHateSpeech "=.*="
+hi def link msHateSpeech Keyword
+
 syn match msDescription "^.*"
 hi def link msDescription Comment
 
