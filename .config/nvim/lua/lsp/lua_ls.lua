@@ -34,7 +34,7 @@ lua_ls.get_config = function()
             "${3rd}/love2d/library",
             "${3rd}/luasocket/library",
           },
-          maxPreload = 100000,
+          maxPreload = 1000000000000,
           preloadFileSize = 10000,
         },
       }

@@ -10,7 +10,6 @@ snippets.init = function()
     snippet(
       "sc",
       [[
-        --- @type scene
         $1 = {
           condition = function(self, name, dt)
             return $2

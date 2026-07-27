@@ -1,5 +1,10 @@
+--- @diagnostic disable:undefined-global
+
 local get_head = function(path)
-  return select(3, string.find(path, "%.?([^%.]*)$"))
+  if vim.endswith(path, ".init") then
+    path = path:sub(1, -6)
+  end
+  return select(1, path:match("%.?([^%.]*)$"))
 end
 
 local lua_path = function(posix_path)
