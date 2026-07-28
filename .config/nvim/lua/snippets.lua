@@ -10,7 +10,7 @@ snippets.init = function()
     snippet(
       "sc",
       [[
-        $1 = {
+        {
           condition = function(self, name, dt)
             return $2
           end,
@@ -24,21 +24,21 @@ snippets.init = function()
     snippet(
       "cs",
       [[
-        $1 = cutscene.make {
-          enabled = $2,
+        cutscene.make {
+          enabled = $1,
           screenplay = "assets/screenplay/$3.ms",
           characters = {
-            $4
+            $3
           },
 
           _condition = function(self, dt, ch, ps)
-            return $5
+            return $4
           end,
 
           _run = function(self, ch, ps, sp)
-            $0
+            $5
           end,
-        },
+        },$0
       ]]
     ),
     snippet(
