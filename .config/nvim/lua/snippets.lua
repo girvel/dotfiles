@@ -26,7 +26,7 @@ snippets.init = function()
       [[
         cutscene.make {
           enabled = $1,
-          screenplay = "assets/screenplay/$3.ms",
+          screenplay = "assets/screenplay/$2.ms",
           characters = {
             $3
           },
