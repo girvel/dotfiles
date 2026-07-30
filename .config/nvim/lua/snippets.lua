@@ -21,42 +21,40 @@ snippets.init = function()
         },
       ]]
     ),
-    luasnip.s(
-      "cs",
-      require("luasnip.extras.fmt").fmt([[
-        cutscene.make {{
-          enabled = {},
-          screenplay = "assets/screenplay/{}.ms",
-          characters = {{
-            {}
-          }},
+    luasnip.s("cs", {
+      luasnip.d(1, function(args, parent)
+        local env = parent.snippet.env
+        local line = (env and env.TM_CURRENT_LINE) or vim.api.nvim_get_current_line()
+        
+        local key = line:match("([%w_]+)%s*=%s*cs$") or line:match("([%w_]+)%s*=%s*$")
+        local default_val = key and key:gsub("^_", "") or ""
 
-          _condition = function(self, dt, ch, ps)
-            return {}
-          end,
+        return luasnip.sn(nil, require("luasnip.extras.fmt").fmt([[
+          cutscene.make {{
+            enabled = {},
+            screenplay = "assets/screenplay/{}.ms",
+            characters = {{
+              {}
+            }},
 
-          _run = function(self, ch, ps, sp)
-            {}
-          end,
-        }}{}
-      ]], {
-        luasnip.i(1),
-        luasnip.d(2, function()
-          local cursor = vim.api.nvim_win_get_cursor(0)
-          local line = vim.api.nvim_get_current_line()
-          local text_before_cursor = line:sub(1, cursor[2])
+            _condition = function(self, dt, ch, ps)
+              return {}
+            end,
 
-          local key = text_before_cursor:match("([%w_]+)%s*=%s*$")
-          local default_val = key and key:gsub("^_", "") or ""
-
-          return luasnip.sn(nil, luasnip.i(1, default_val))
-        end),
-        luasnip.i(3),
-        luasnip.i(4),
-        luasnip.i(5),
-        luasnip.i(0),
-      })
-    ),
+            _run = function(self, ch, ps, sp)
+              {}
+            end,
+          }},{}
+        ]], {
+          luasnip.i(1),
+          luasnip.i(2, default_val),
+          luasnip.i(3),
+          luasnip.i(4),
+          luasnip.i(5),
+          luasnip.i(0),
+        }))
+      end)
+    }),
     snippet(
       "spl",
       [[
