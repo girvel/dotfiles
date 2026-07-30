@@ -21,25 +21,41 @@ snippets.init = function()
         },
       ]]
     ),
-    snippet(
+    luasnip.s(
       "cs",
-      [[
-        cutscene.make {
-          enabled = $1,
-          screenplay = "assets/screenplay/$2.ms",
-          characters = {
-            $3
-          },
+      require("luasnip.extras.fmt").fmt([[
+        cutscene.make {{
+          enabled = {},
+          screenplay = "assets/screenplay/{}.ms",
+          characters = {{
+            {}
+          }},
 
           _condition = function(self, dt, ch, ps)
-            return $4
+            return {}
           end,
 
           _run = function(self, ch, ps, sp)
-            $5
+            {}
           end,
-        },$0
-      ]]
+        }}{}
+      ]], {
+        luasnip.i(1),
+        luasnip.d(2, function()
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          local line = vim.api.nvim_get_current_line()
+          local text_before_cursor = line:sub(1, cursor[2])
+
+          local key = text_before_cursor:match("([%w_]+)%s*=%s*$")
+          local default_val = key and key:gsub("^_", "") or ""
+
+          return luasnip.sn(nil, luasnip.i(1, default_val))
+        end),
+        luasnip.i(3),
+        luasnip.i(4),
+        luasnip.i(5),
+        luasnip.i(0),
+      })
     ),
     snippet(
       "spl",
