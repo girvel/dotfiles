@@ -111,6 +111,27 @@ end
 lua_ls.auto_require = function(word)
   local buf = vim.api.nvim_get_current_buf()
 
+  local chunk_size = 50
+  local row = 0
+
+  while true do
+    local lines = vim.api.nvim_buf_get_lines(buf, row, row + chunk_size, false)
+    if #lines == 0 then break end
+
+    for _, line in ipairs(lines) do
+      if line:match("^local%s+"..word.."%s*=%s*require") then
+        return
+      elseif not line:match("^%s*$")
+        or line:match("^%s*%-%-")
+        or line:match("^local%s+[%w_]+%s*=%s*require")
+      then
+        goto scan_done
+      end
+    end
+  end
+
+  ::scan_done::
+
   local candidates do
     candidates = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
       :filter(function(path)
