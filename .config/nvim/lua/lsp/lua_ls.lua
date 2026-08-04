@@ -121,13 +121,6 @@ lua_ls.auto_require = function(word)
       :totable()
   end
 
-  local insert_require = function(modpath)
-    vim.api.nvim_buf_set_lines(
-      buf, 0, 0, false,
-      {('local %s = require("%s")'):format(word, modpath)}
-    )
-  end
-
   Api.feed('<Esc>')
   Async.step()
 
@@ -146,7 +139,10 @@ lua_ls.auto_require = function(word)
     end
   end
 
-  insert_require(modpath)
+  vim.api.nvim_buf_set_lines(
+    buf, 0, 0, false,
+    {('local %s = require("%s")'):format(word, modpath)}
+  )
   Api.feed("a")
   Async.step()
 end
@@ -281,7 +277,7 @@ init_mappings = function()
     end
 
     lua_ls.auto_require(word)
-    vim.api.nvim_put({"."}, "c", true, true)
+    Api.feed(".")
 
     Async.sleep(20)
     cmp.complete()
