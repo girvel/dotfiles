@@ -5,6 +5,9 @@ endif
 syn match msHateSpeech "=.*="
 hi def link msHateSpeech Keyword
 
+syn match msSub "%.*%"
+hi def link msSub Keyword
+
 syn match msDescription "^.*"
 hi def link msDescription Comment
 
