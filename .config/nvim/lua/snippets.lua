@@ -69,41 +69,26 @@ snippets.init = function()
         sp:finish_branch()
       ]]
     ),
-    snippet(
-      "spbs",
-      [[
-        sp:start_branches()
-          $0
-        sp:finish_branches()
-      ]]
-    ),
-    snippet(
-      "sps",
-      [[
-        sp:start_single_branch($1)
-          $0
-        sp:finish_single_branch()
-      ]]
-    ),
+    snippet("spbs", [[
+      sp:start_branches()
+        $0
+      sp:finish_branches()
+    ]]),
+    snippet("sps", [[
+      sp:start_single_branch($1)
+        $2
+      sp:finish_single_branch()$0
+    ]]),
+    snippet("spa", [[
+      sp:start_single_branch(State.player:ability_check($1) and 1 or 2)
+        $2
+      sp:finish_single_branch()$0
+    ]]),
     snippet(
       "spos",
       [[
         api.options(sp:start_options())
-          $0
-        sp:finish_options()
-      ]]
-    ),
-    snippet(
-      "spoi",
-      [[
-        if api.options(sp:start_options()) == $1 then return end
-        sp:finish_options()$0
-      ]]
-    ),
-    snippet(
-      "spon",
-      [[
-        if api.options(sp:start_options()) ~= $1 then return end
+          $1
         sp:finish_options()$0
       ]]
     ),
@@ -118,7 +103,7 @@ snippets.init = function()
     snippet(
       "ac",
       [[
-        ch.player:ability_check($1)$0
+        State.player:ability_check($1)$0
       ]]
     ),
     snippet(
