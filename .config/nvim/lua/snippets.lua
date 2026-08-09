@@ -79,6 +79,11 @@ snippets.init = function()
         $2
       sp:finish_single_branch()$0
     ]]),
+    snippet("spso", [[
+      sp:start_single_option()
+        $1
+      sp:finish_single_option()$0
+    ]]),
     snippet("spa", [[
       sp:start_single_branch(State.player:ability_check($1) and 1 or 2)
         $2
