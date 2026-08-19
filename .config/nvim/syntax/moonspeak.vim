@@ -5,6 +5,9 @@ endif
 syn match msHateSpeech "=.*="
 hi def link msHateSpeech Keyword
 
+syn match msSkillCheck "\[.* -- .*\]"
+hi def link msSkillCheck Keyword
+
 syn match msSub "%.*%"
 hi def link msSub Keyword
 
