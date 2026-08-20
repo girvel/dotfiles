@@ -5,7 +5,7 @@ working_directory = "D:\\workshop\\"
 size = 12
 
 [font.normal]
-family = "CodeNewRoman Nerd Font Mono"
+family = "JetBrainsMono Nerd Font"
 
 [[keyboard.bindings]]
 action = "ReceiveChar"
