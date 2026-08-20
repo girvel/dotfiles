@@ -4,6 +4,7 @@ local lua_ls = require("lsp.lua_ls")
 return {
   {
     "hrsh7th/nvim-cmp",
+    custom_tags = {"lite"},
     config = function()
       local luasnip = require("luasnip")
       local cmp = require("cmp")
@@ -116,9 +117,18 @@ return {
       })
     end,
   },
+  {
+    "hrsh7th/cmp-buffer",
+    custom_tags = {"lite"},
+  },
+  {
+    "hrsh7th/cmp-cmdline",
+    custom_tags = {"lite"},
+  },
+  {
+    "saadparwaiz1/cmp_luasnip",
+    custom_tags = {"lite"},
+  },
   {"hrsh7th/cmp-nvim-lsp"},
   {"hrsh7th/cmp-nvim-lua"},
-  {"hrsh7th/cmp-buffer"},
-  {"hrsh7th/cmp-cmdline"},
-  {"saadparwaiz1/cmp_luasnip"},
 }
