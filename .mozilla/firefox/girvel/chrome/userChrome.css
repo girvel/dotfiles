@@ -1,3 +1,9 @@
-#sidebar-main {
-  display: none;
+#sidebar-container {
+  display: none !important;
+  visibility: collapse !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  width: 0px !important;
+  color: red !important;
+  background-color: red !important;
 }
