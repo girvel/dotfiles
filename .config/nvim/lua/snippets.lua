@@ -85,14 +85,19 @@ snippets.init = function()
       sp:finish_single_option()$0
     ]]),
     snippet("spa", [[
-      sp:start_single_branch(State.player:ability_check($1) and 1 or 2)
+      local check = State.player:ability_check($1)
+      sp:start_single_branch(check and 1 or 2)
+      if check then
         $2
+      else
+        $3
+      end
       sp:finish_single_branch()$0
     ]]),
     snippet(
       "spos",
       [[
-        api.options(sp:start_options())
+        sp:start_options()
           $1
         sp:finish_options()$0
       ]]
