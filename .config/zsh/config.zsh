@@ -24,7 +24,7 @@ alias I='sudo xbps-install -S'
 alias q='xbps-query -Rs'
 alias l='eza -lAh --group-directories-first'
 function lm() {
-    eza -lA -s=modified --color=always "$@" | head -n 20
+    eza -lA -s=modified --color=always "$@" | tail -n 20
 }
 
 # EDITOR #
