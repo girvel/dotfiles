@@ -51,7 +51,13 @@ return {
 
     Api.rumap("n", "<leader>ff", keep(builtin.find_files), {})
     Api.rumap("n", "<leader>fo", keep(builtin.oldfiles), {})
-    Api.rumap("n", "<leader>fg", keep(builtin.live_grep), {})
+    Api.rumap("n", "<leader>fg", keep(function(opts)
+      opts = opts or {}
+      opts.additional_args = opts.additional_args or {}
+      table.insert(opts.additional_args, "--fixed-strings")
+      builtin.live_grep(opts)
+    end), {})
+    Api.rumap("n", "<leader>fx", keep(builtin.live_grep), {})
     Api.rumap("n", "<leader>fh", keep(builtin.help_tags), {})
     Api.rumap("n", "<leader>fm", keep(builtin.keymaps), {})
 
@@ -59,7 +65,7 @@ return {
     Api.rumap("n", "<leader>fr", builtin.resume, {})
     Api.rumap("n", "<leader>fn", ":Telescope notify<CR>", {})
     Api.rumap('n', '<leader>fu', builtin.lsp_references, {})
-    Api.rumap("n", "<leader>fd", '"zyiw:Telescope live_grep default_text=<C-r>z<cr> =', {})
+    Api.rumap("n", "<leader>fd", '"zyiw:Telescope live_grep additional_args={"--fixed-strings"} default_text=<C-r>z<cr> =', {})
     Api.rumap("n", "gd", builtin.lsp_definitions, {})
     -- Api.rumap("n", "<leader>ft", builtin.treesitter, {})
     -- Api.rumap("n", "<leader>fb", builtin.buffers, {})
