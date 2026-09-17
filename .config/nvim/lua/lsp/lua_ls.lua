@@ -36,6 +36,7 @@ lua_ls.get_config = function()
           },
           maxPreload = 1000000000000,
           preloadFileSize = 10000,
+          ignoreSubmodules = false,
         },
       }
     }
