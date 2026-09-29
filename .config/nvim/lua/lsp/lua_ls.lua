@@ -82,6 +82,12 @@ local SECOND = 1000000000
 --- @async
 lua_ls.feed = function(silent)
   local buffers = vim.iter(vim.fn.globpath(".", "**/*.lua", true, true))
+    :filter(function(path)
+      while vim.startswith(path, "./") do
+        path = path:sub(3)
+      end
+      return path:sub(1, 1) ~= "."
+    end)
     :map(function(path) return vim.fn.bufadd(vim.fn.fnamemodify(path, ":p")) end)
     :filter(function(buf) return vim.fn.bufloaded(buf) == 0 end)
     :totable()
