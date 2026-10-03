@@ -55,6 +55,9 @@ return {
       opts = opts or {}
       opts.additional_args = opts.additional_args or {}
       table.insert(opts.additional_args, "--fixed-strings")
+      table.insert(opts.additional_args, "--hidden")
+      table.insert(opts.additional_args, "--glob")
+      table.insert(opts.additional_args, "!*.ldtk")
       builtin.live_grep(opts)
     end), {})
     Api.rumap("n", "<leader>fx", keep(builtin.live_grep), {})
