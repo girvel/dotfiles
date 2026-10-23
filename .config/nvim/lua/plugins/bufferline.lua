@@ -40,13 +40,10 @@ return {
     local cmd_prev = "<cmd>lua _G.CycleMainBuffer('Prev')<CR>"
     local cmd_next = "<cmd>lua _G.CycleMainBuffer('Next')<CR>"
 
-    for _, mode in ipairs {"n", "t", "i"} do
-      local prefix = mode == "n" and "" or "<Esc>"
-      for _, keypair in ipairs {{"Left", "Right"}, {"h", "l"}} do
-        local left, right = unpack(keypair)
-        Api.rumap(mode, "<C-" .. left .. ">",  prefix .. cmd_prev, {})
-        Api.rumap(mode, "<C-" .. right .. ">", prefix .. cmd_next, {})
-      end
+    for _, keypair in ipairs {{"Left", "Right"}, {"h", "l"}} do
+      local left, right = unpack(keypair)
+      Api.rumap("n", "<C-" .. left .. ">", cmd_prev, {})
+      Api.rumap("n", "<C-" .. right .. ">", cmd_next, {})
     end
 
     Api.rumap("n", "<leader>bl", function()

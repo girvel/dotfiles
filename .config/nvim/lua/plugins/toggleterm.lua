@@ -8,8 +8,7 @@ return {
     -- Api.rumap("n", "<leader>ch", ":ToggleTerm direction=horizontal size=15<CR>")
 
     _G.set_terminal_keymaps = function()
-      Api.rumap("t", "<esc>", "<C-\\><C-n>")
-      Api.rumap('t', '<C-w>', "<C-\\><C-n><C-w>")
+      Api.rumap("t", "<Esc>", "<C-\\><C-n>")
     end
     vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
   end,
