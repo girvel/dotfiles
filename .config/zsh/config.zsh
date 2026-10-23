@@ -107,10 +107,10 @@ function mkmv() {
 alias zmvd="zmv -p mkmv"
 
 # Fix arrow keys in Neovim terminal (Application Cursor Keys)
-bindkey '^[OA' history-search-backward
-bindkey '^[OB' history-search-forward
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 # Conflicts with neovim embedded terminal
 bindkey -r "^[a" accept-and-hold
 bindkey -r "^[b" backward-word
