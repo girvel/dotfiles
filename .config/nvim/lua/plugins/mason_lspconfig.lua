@@ -8,6 +8,7 @@ return {
     ensure_installed = {
       "clangd",
       "lua_ls",
+      "emmet_language_server",
     },
   },
 }

@@ -33,6 +33,9 @@ return {
       },
     }
 
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
     vim.lsp.config.lua_ls = lua_ls.get_config()
     vim.lsp.config.clangd = clangd.get_config()
     vim.lsp.config.glsl_analyzer = {}
@@ -42,9 +45,12 @@ return {
         client.server_capabilities.semanticTokensProvider = nil
       end,
     }
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    vim.lsp.config.emmet_language_server = {
+      capabilities = capabilities,
+      filetypes = {
+        "html",
+      },
+    }
     vim.lsp.config.cssls = {
       capabilities = capabilities,
     }
