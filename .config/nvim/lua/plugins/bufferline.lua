@@ -20,6 +20,9 @@ return {
           filetype = "snacks_layout_box",
         },
       },
+      close_command = function(bufnr)
+        vim.bo[bufnr].buflisted = false
+      end,
     },
   },
 
@@ -48,20 +51,14 @@ return {
 
     Api.rumap("n", "<leader>bl", function()
       vim.cmd("BufferLineCloseRight")
-      Async.step()
-      lua_ls.feed(true)
     end, {})
 
     Api.rumap("n", "<leader>bh", function()
       vim.cmd("BufferLineCloseLeft")
-      Async.step()
-      lua_ls.feed(true)
     end, {})
 
     Api.rumap("n", "<leader>bo", function()
       vim.cmd("BufferLineCloseOthers")
-      Async.step()
-      lua_ls.feed(true)
     end, {})
 
     local go_to_prev_listed_buffer = function()
