@@ -1,5 +1,11 @@
 STUFF TO DO
-- submitting snippets with Tab
-- scrolling suggestions
-- sorting suggestions?
-- set current directory name as a title
+
+- show line numbers in the terminal
+- match terminal colors
+- toggle the theme persistently
+- fix LuaLS overlapping with terminal
++ remove toggleterm, do terminal.lua instead
++ submitting snippets with Tab
++ scrolling suggestions
++ sorting suggestions?
++ set current directory name as a title
