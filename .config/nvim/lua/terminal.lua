@@ -11,6 +11,7 @@ Api.rumap("n", "<leader>cc", function()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.bo[buf].buftype == "terminal" then
       vim.api.nvim_set_current_buf(buf)
+      vim.bo[buf].buflisted = true
       return
     end
   end
