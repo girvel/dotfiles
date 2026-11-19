@@ -87,14 +87,8 @@ function mix() {
     git status > git-status-dump.txt
     # Strips color codes
     # tail -n 200 /tmp/zsh_session.log | sed 's/\x1b\[[0-9;]*m//g' > terminal-history-dump.txt
-    npx repomix@latest -o ~/Desktop/repomix-output.md
+    npx repomix@1.19.0 -o ~/Desktop/repomix-output.md
     rm github-issues-dump.json git-diff-dump.txt git-status-dump.txt
-}
-
-function mixs() {
-    cb > shell-dump.txt
-    mix
-    rm shell-dump.txt
 }
 
 autoload zmv
