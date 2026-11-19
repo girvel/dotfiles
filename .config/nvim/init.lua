@@ -8,7 +8,6 @@ Config = {
 require("opt").init()
 require("keymap").init()
 require("package_manager").init()
-require("neovide").init()
 require("safety").init()
 require("terminal")
 

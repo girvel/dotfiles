@@ -4,6 +4,8 @@ STUFF TO DO
 - match terminal colors
 - toggle the theme persistently
 - fix LuaLS overlapping with terminal
+- visual-multi delete does not go to a buffer
+- auto-require should not fuck with the shebang
 + remove toggleterm, do terminal.lua instead
 + submitting snippets with Tab
 + scrolling suggestions
