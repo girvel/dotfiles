@@ -20,6 +20,8 @@ end)
 
 _G.set_terminal_keymaps = function()
   Api.rumap("t", "<Esc>", "<C-\\><C-n>")
+  vim.opt_local.relativenumber = true
+  vim.opt_local.number = true
 end
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 

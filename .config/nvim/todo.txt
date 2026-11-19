@@ -1,10 +1,10 @@
 STUFF TO DO
 
 - command suggestions behave weirdly
-- show line numbers in the terminal
 - toggle the theme persistently
-- visual-multi delete does not go to a buffer
+- visual-multi delete does not go to a buffer (hard to implement)
 - auto-require should not fuck with the shebang
++ show line numbers in the terminal
 + fix LuaLS overlapping with terminal
 + match terminal colors
 + remove toggleterm, do terminal.lua instead
