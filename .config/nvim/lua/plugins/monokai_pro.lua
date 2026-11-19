@@ -3,6 +3,7 @@ local THEME = "spectrum"
 return {
   "loctvl842/monokai-pro.nvim",
   opts = {
+    terminal_colors = false,
     filter = THEME,
     background_clear = {
       "telescope",
