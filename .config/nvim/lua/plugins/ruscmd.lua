@@ -29,6 +29,5 @@ return {
 
     vim.cmd.cnoreabbrev("цй wq")
     vim.cmd.cnoreabbrev("цф wa")
-    vim.cmd.cnoreabbrev("цйф wqa")
   end,
 }
