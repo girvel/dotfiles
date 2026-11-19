@@ -1,10 +1,11 @@
 STUFF TO DO
 
+- command suggestions behave weirdly
 - show line numbers in the terminal
 - toggle the theme persistently
-- fix LuaLS overlapping with terminal
 - visual-multi delete does not go to a buffer
 - auto-require should not fuck with the shebang
++ fix LuaLS overlapping with terminal
 + match terminal colors
 + remove toggleterm, do terminal.lua instead
 + submitting snippets with Tab
