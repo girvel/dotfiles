@@ -1,4 +1,12 @@
 local THEME = "spectrum"
+local apply_monokai = function()
+  vim.cmd.colorscheme("monokai-pro")
+  local palette = require("monokai-pro.palette." .. THEME)
+  vim.api.nvim_set_hl(0, "LspPreview", { bg = palette.dark1 })
+  vim.api.nvim_set_hl(0, "LspPreviewBorder", { bg = palette.dark1, fg = palette.dimmed2 })
+  vim.api.nvim_set_hl(0, "NoicePopup", { link = "LspPreview" })
+  vim.api.nvim_set_hl(0, "NoicePopupBorder", { link = "LspPreviewBorder" })
+end
 
 return {
   "loctvl842/monokai-pro.nvim",
@@ -15,12 +23,14 @@ return {
     local monokai = require("monokai-pro")
 
     monokai.setup(opts)
-    vim.cmd.colorscheme("monokai-pro")
+    apply_monokai()
 
-    local palette = require("monokai-pro.palette." .. THEME)
-    vim.api.nvim_set_hl(0, "LspPreview", { bg = palette.dark1 })
-    vim.api.nvim_set_hl(0, "LspPreviewBorder", { bg = palette.dark1, fg = palette.dimmed2 })
-    vim.api.nvim_set_hl(0, "NoicePopup", { link = "LspPreview" })
-    vim.api.nvim_set_hl(0, "NoicePopupBorder", { link = "LspPreviewBorder" })
-  end
+    Api.rumap("n", "<leader>tt", function()
+      if vim.g.colors_name == "monokai-pro" then
+        vim.cmd.colorscheme("default")
+      else
+        apply_monokai()
+      end
+    end)
+  end,
 }

@@ -1,9 +1,10 @@
 STUFF TO DO
 
 - command suggestions behave weirdly
-- toggle the theme persistently
+- make the current theme persist through sessions
 - visual-multi delete does not go to a buffer (hard to implement)
 - auto-require should not fuck with the shebang
++ toggle the theme
 + show line numbers in the terminal
 + fix LuaLS overlapping with terminal
 + match terminal colors

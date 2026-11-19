@@ -29,8 +29,12 @@ return {
     },
   },
   config = function(_, opts)
-    vim.api.nvim_set_hl(0, "IblIndent1", { fg = "#363537" })
-    vim.api.nvim_set_hl(0, "IblScope1",  { fg = "#525053" })
+    local hooks = require("ibl.hooks")
+    -- hooks allow the colors to autoreload on theme change
+    hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+      vim.api.nvim_set_hl(0, "IblIndent1", { fg = "#363537" })
+      vim.api.nvim_set_hl(0, "IblScope1",  { fg = "#525053" })
+    end)
     require("ibl").setup(opts)
   end,
 }
