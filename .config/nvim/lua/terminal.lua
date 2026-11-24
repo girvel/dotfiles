@@ -2,7 +2,7 @@ local open_main_terminal = Async.make(function()
   vim.cmd("enew | terminal")
   Async.step()
   local buf = vim.api.nvim_get_current_buf()
-  Api.rumap("n", "<Esc>", "<cmd>b #<cr>", {buffer = buf})
+  Api.rumap("n", "<Esc>", Api.go_to_prev_listed_buffer, {buffer = buf})
 end)
 
 Api.rumap("n", "<leader>cn", "<cmd>enew<CR><cmd>terminal<CR>", {})

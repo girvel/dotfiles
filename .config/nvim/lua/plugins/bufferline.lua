@@ -1,6 +1,3 @@
-local lua_ls = require("lsp.lua_ls")
-
-
 return {
   "akinsho/bufferline.nvim",
   dependencies = "nvim-tree/nvim-web-devicons",
@@ -61,21 +58,6 @@ return {
       vim.cmd("BufferLineCloseOthers")
     end, {})
 
-    local go_to_prev_listed_buffer = function()
-      local jumps, current_pos = unpack(vim.fn.getjumplist())
-
-      for i = current_pos, 1, -1 do
-        local buf = jumps[i].bufnr
-
-        if vim.api.nvim_buf_is_valid(buf)
-          and vim.bo[buf].buflisted
-        then
-          vim.api.nvim_set_current_buf(buf)
-          break
-        end
-      end
-    end
-
     Api.rumap("n", "<leader>bc", function()
       vim.bo.buflisted = false
 
@@ -88,17 +70,17 @@ return {
         return
       end
 
-      go_to_prev_listed_buffer()
+      Api.go_to_prev_listed_buffer()
     end, {})
 
     Api.rumap("n", "<leader>bd", function()
       Api.feed(":bd!<CR>")
       Async.step()
-      go_to_prev_listed_buffer()
+      Api.go_to_prev_listed_buffer()
     end, {})
 
     -- TODO insert mode
-    Api.rumap("n", "<C-S-o>", go_to_prev_listed_buffer, {})
+    Api.rumap("n", "<C-S-o>", Api.go_to_prev_listed_buffer, {})
 
     -- create tab for the buffer if modified
     vim.api.nvim_create_autocmd("BufModifiedSet", {

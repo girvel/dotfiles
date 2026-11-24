@@ -62,4 +62,19 @@ api.debug = function(x)
   return x
 end
 
+api.go_to_prev_listed_buffer = function()
+  local jumps, current_pos = unpack(vim.fn.getjumplist())
+
+  for i = current_pos, 1, -1 do
+    local buf = jumps[i].bufnr
+
+    if vim.api.nvim_buf_is_valid(buf)
+      and vim.bo[buf].buflisted
+    then
+      vim.api.nvim_set_current_buf(buf)
+      break
+    end
+  end
+end
+
 return api
