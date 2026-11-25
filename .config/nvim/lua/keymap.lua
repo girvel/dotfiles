@@ -11,9 +11,9 @@ keymap.init = function()
 
   Api.rumap("n", "<leader>lr", vim.lsp.buf.rename, {desc = "LSP: rename variable"})
   Api.rumap("n", "<leader>lf", vim.diagnostic.open_float, {desc = "LSP: see warning"})
-  Api.rumap("n", "<leader>le", ":LspStart<CR>", {desc = "LSP: Start (enable)"})
-  Api.rumap("n", "<leader>ld", ":LspStop<CR>", {desc = "LSP: Stop (disable)"})
-  Api.rumap("n", "<leader>ls", ":LspRestart<CR>", {desc = "LSP: Restart LSP"})
+  Api.rumap("n", "<leader>le", ":lsp enable<CR>", {desc = "LSP: Start (enable)"})
+  Api.rumap("n", "<leader>ld", ":lsp disable<CR>", {desc = "LSP: Stop (disable)"})
+  Api.rumap("n", "<leader>ls", ":lsp restart<CR>", {desc = "LSP: Restart LSP"})
   Api.rumap("n", "gD", vim.lsp.buf.declaration, {})
 
   Api.rumap("n", "<leader>dd", "^t]rx", {desc = "Complete markdown task"})
